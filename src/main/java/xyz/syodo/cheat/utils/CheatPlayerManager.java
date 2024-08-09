@@ -41,15 +41,7 @@ public class CheatPlayerManager implements Listener {
 			CheatPlayerManager.players.put(p.getName(), new CheatPlayer(p));
 		}
 
-		Server.getInstance().getScheduler().scheduleDelayedRepeatingTask(new Runnable() {
-
-			@Override
-			public void run() {
-				for(CheatPlayer p : players.values()) {
-					p.purgePoints();
-				}
-			}
-		}, 20, 20);
+		Server.getInstance().getScheduler().scheduleDelayedRepeatingTask(() -> players.values().forEach(CheatPlayer::purgePoints), 20, 20);
 	}
 	
 }
