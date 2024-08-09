@@ -1,4 +1,4 @@
-package xyz.syodo.utils.data;
+package xyz.syodo.cheat.utils.data;
 
 import lombok.Setter;
 

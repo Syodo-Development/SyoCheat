@@ -1,4 +1,4 @@
-package xyz.syodo.utils;
+package xyz.syodo.cheat.utils;
 
 import java.util.HashMap;
 

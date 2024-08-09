@@ -1,11 +1,11 @@
-package xyz.syodo;
+package xyz.syodo.cheat;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import lombok.Getter;
 import xyz.syodo.database.redis.SyoRedis;
-import xyz.syodo.utils.CheatPlayerManager;
+import xyz.syodo.cheat.utils.CheatPlayerManager;
 
 public class SyoCheat extends PluginBase {
 
