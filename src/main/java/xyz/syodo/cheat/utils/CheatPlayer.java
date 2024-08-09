@@ -2,14 +2,11 @@ package xyz.syodo.cheat.utils;
 
 import cn.nukkit.Player;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class CheatPlayer {
 
-	private Player player;
-	
-	public CheatPlayer(Player player) {
-		this.player = player;
-	}
-
+	private final Player player;
 }
