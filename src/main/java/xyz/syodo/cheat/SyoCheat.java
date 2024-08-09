@@ -5,6 +5,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import lombok.Getter;
+import xyz.syodo.cheat.listeners.EntityDamageByEntityListener;
 import xyz.syodo.database.redis.SyoRedis;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
@@ -32,9 +33,15 @@ public class SyoCheat extends PluginBase {
 	}
 	
 	public void registerListeners() {
+<<<<<<< Updated upstream
 		PluginManager pluginManager = Server.getInstance().getPluginManager();
 
 		pluginManager.registerEvents(new CheatPlayerManager(), plugin);
+=======
+		Server.getInstance().getPluginManager().registerEvents(new CheatPlayerManager(), plugin);
+
+		Server.getInstance().getPluginManager().registerEvents(new EntityDamageByEntityListener(), plugin);
+>>>>>>> Stashed changes
 	}
 	
 }
