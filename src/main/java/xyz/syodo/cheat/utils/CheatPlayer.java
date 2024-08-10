@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.container.combat.CombatContainer;
+import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 import xyz.syodo.cloud.CloudAPI;
 import xyz.syodo.communication.message.Message;
 
@@ -25,6 +26,7 @@ public class CheatPlayer {
 
 	//Containers
 	private final CombatContainer combatContainer = new CombatContainer(this);
+	private final MovementContainer movementContainer = new MovementContainer(this);
 
 	//Cheat History
 	private final HashMap<Long, CheatResponse> cheatResponses = new HashMap<>();
@@ -35,6 +37,7 @@ public class CheatPlayer {
 
 	public void addResponse(CheatResponse response) {
 		if(!response.isCheating()) return;
+		getPlayer().sendMessage(response.toString());
 		cheatResponses.put(System.currentTimeMillis(), response);
 		Long time = System.currentTimeMillis();
 		int cheatpoints = 0;
@@ -48,10 +51,10 @@ public class CheatPlayer {
 				if(cheatResponse.getCheck() == response.getCheck()) countSpecific++;
 			}
 		}
-		if(cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC) {
+
+		if(cheatpoints >= KICK_POINTS) {
 			this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
-			CloudAPI api = CloudAPI.get();
-			api.connectSpecific(api.getPlayer(getPlayer().getName()), "Lobby-1");
+			this.getPlayer().close();
 			Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
 		}
 	}

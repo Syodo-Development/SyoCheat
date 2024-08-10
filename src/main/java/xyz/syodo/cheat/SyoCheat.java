@@ -8,6 +8,7 @@ import cn.nukkit.scheduler.ServerScheduler;
 import lombok.Getter;
 import xyz.syodo.cheat.listeners.DataPacketReceivedListener;
 import xyz.syodo.cheat.listeners.EntityDamageByEntityListener;
+import xyz.syodo.cheat.listeners.PlayerTeleportListener;
 import xyz.syodo.cheat.task.AutoClickerTask;
 import xyz.syodo.database.redis.SyoRedis;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
@@ -43,7 +44,7 @@ public class SyoCheat extends PluginBase {
 		pluginManager.registerEvents(new CheatPlayerManager(), plugin);
 		pluginManager.registerEvents(new EntityDamageByEntityListener(), plugin);
 		pluginManager.registerEvents(new DataPacketReceivedListener(), plugin);
-
+		pluginManager.registerEvents(new PlayerTeleportListener(), plugin);
 
 	}
 

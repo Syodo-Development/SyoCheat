@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class CPSData extends Data {
 
     @Setter
-    private static int REMEMBER_CPS = 20;
+    private static int REMEMBER_CPS = 10;
 
     private int clicks = 0;
     public IntArrayList CPS = new IntArrayList();
@@ -26,7 +26,7 @@ public class CPSData extends Data {
     }
 
     public CheatResponse saveCPS() {
-        CPS.add(clicks);
+        CPS.addLast(clicks);
         clicks = 0;
         if(CPS.size() > REMEMBER_CPS) {
             CPS.removeFirst();
@@ -47,13 +47,14 @@ public class CPSData extends Data {
             average += i;
         }
         average /= (double) count;
+
         if (average >= 6.0D && count > 7 && lowest >= 4.0D && average - lowest < average / 5.0D) {
             response.setCheating(true);
             response.getMetaData().put("lowest", lowest);
             response.getMetaData().put("highest", highest);
             response.getMetaData().put("average", average);
             //removing the latest 7 elements to prevent the same data to trigger the autoclicker check again and again
-            CPS.removeElements((count-1) - 7, count-1);
+            CPS.removeElements((count-1) - 3, count-1);
         }
         return response;
     }
