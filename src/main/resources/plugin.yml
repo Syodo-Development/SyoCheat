@@ -1,5 +1,5 @@
 name: SyoCheat
 version: 2.0.0
 api: 2.0.0
-main: xyz.syodo.syocheat.SyoCheat
+main: xyz.syodo.cheat.SyoCheat
 depend: [SyoCore]

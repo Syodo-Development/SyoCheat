@@ -4,8 +4,11 @@ import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
+import cn.nukkit.scheduler.ServerScheduler;
 import lombok.Getter;
+import xyz.syodo.cheat.listeners.DataPacketReceivedListener;
 import xyz.syodo.cheat.listeners.EntityDamageByEntityListener;
+import xyz.syodo.cheat.task.AutoClickerTask;
 import xyz.syodo.database.redis.SyoRedis;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
@@ -28,20 +31,28 @@ public class SyoCheat extends PluginBase {
 	@Override
 	public void onEnable() {
 		this.registerListeners();
+		this.registerTasks();
 
 		this.getServer().getLogger().info("§aSyoCheat §ev" + this.getDescription().getVersion() + " §aenabled!");
 	}
 	
 	public void registerListeners() {
-<<<<<<< Updated upstream
+
 		PluginManager pluginManager = Server.getInstance().getPluginManager();
 
 		pluginManager.registerEvents(new CheatPlayerManager(), plugin);
-=======
-		Server.getInstance().getPluginManager().registerEvents(new CheatPlayerManager(), plugin);
+		pluginManager.registerEvents(new EntityDamageByEntityListener(), plugin);
+		pluginManager.registerEvents(new DataPacketReceivedListener(), plugin);
 
-		Server.getInstance().getPluginManager().registerEvents(new EntityDamageByEntityListener(), plugin);
->>>>>>> Stashed changes
+
+	}
+
+	public void registerTasks() {
+
+		ServerScheduler serverScheduler = Server.getInstance().getScheduler();
+
+		serverScheduler.scheduleDelayedRepeatingTask(new AutoClickerTask(), 20, 10);
+
 	}
 	
 }

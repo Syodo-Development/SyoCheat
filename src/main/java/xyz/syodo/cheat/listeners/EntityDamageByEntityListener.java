@@ -1,6 +1,7 @@
 package xyz.syodo.cheat.listeners;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -13,7 +14,7 @@ public class EntityDamageByEntityListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if(event.getEntity() instanceof Player player) {
             CheatPlayer cheatPlayer = CheatPlayerManager.getPlayer(player);
-            if(!cheatPlayer.getCombatContainer().getHitCooldownData().hit()) {
+            if(cheatPlayer.getCombatContainer().getHitCooldownData().doCheck().isCheating()) {
                 event.setCancelled();
             }
         }

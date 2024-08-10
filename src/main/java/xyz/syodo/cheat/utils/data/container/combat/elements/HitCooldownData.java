@@ -3,17 +3,25 @@ package xyz.syodo.cheat.utils.data.container.combat.elements;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import lombok.Getter;
 import lombok.Setter;
+import xyz.syodo.cheat.utils.data.CheatCheck;
+import xyz.syodo.cheat.utils.data.CheatResponse;
+import xyz.syodo.cheat.utils.data.Container;
+import xyz.syodo.cheat.utils.data.Data;
 
-public class HitCooldownData {
+public class HitCooldownData extends Data {
 
     private Long lastHit = System.currentTimeMillis();
 
-    public boolean hit() {
+    public HitCooldownData(Container container) {
+        super(container);
+    }
+
+    public CheatResponse doCheck() {
+        CheatResponse response = new CheatResponse(CheatCheck.OTHER);
         if(System.currentTimeMillis() - lastHit < 333L) {
-            return false;
+            response.setCheating(true);
         }
-        lastHit = System.currentTimeMillis();
-        return true;
+        return response;
     }
 
 }
