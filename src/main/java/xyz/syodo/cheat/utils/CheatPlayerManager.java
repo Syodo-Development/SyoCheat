@@ -30,8 +30,6 @@ public class CheatPlayerManager implements Listener {
 
 	public CheatPlayerManager() {
 		Server.getInstance().getOnlinePlayers().values().forEach(player -> players.put(player.getName(), new CheatPlayer(player)));
-
-		//Server.getInstance().getScheduler().scheduleDelayedRepeatingTask(() -> players.values().forEach(CheatPlayer::purgePoints), 20, 20);
 	}
 	
 }
