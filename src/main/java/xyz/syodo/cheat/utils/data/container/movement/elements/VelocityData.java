@@ -7,7 +7,9 @@ import cn.nukkit.level.ParticleEffect;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.math.Vector3f;
+import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import lombok.Setter;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
@@ -20,12 +22,14 @@ import java.util.List;
 public class VelocityData extends Data {
 
     @Setter
-    private static int REMEMBER_VELO = 10;
+    private static int REMEMBER_VELO = 3;
 
     private int clicks = 0;
 
     private EntityMotionEvent event;
     private Vector3f location;
+
+    private DoubleArrayList distances = new DoubleArrayList();
 
     public VelocityData(Container container) {
         super(container);
@@ -41,7 +45,7 @@ public class VelocityData extends Data {
             for(double y = axis.getMinY(); y <= axis.getMaxY(); y+=0.5){
                 for(double z = axis.getMinZ(); z <= axis.getMaxZ(); z+=0.5){
                     Block b = p.level.getBlock(new Vector3(x,y,z));
-                    if(b.isSolid() || b.getId().equals(Block.WEB)) {
+                    if(b.isSolid() || b.getId().equals(Block.WEB) || b.getId().contains("slab")) {
                         return false;
                     }
                 }
@@ -54,10 +58,29 @@ public class VelocityData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.VELOCITY);
-        double distance = location.distance(getContainer().getPlayer().getPlayer().asVector3f().setY(0));
-        if(distance <= 0.1) {
+        Vector3f playerloc = getContainer().getPlayer().getPlayer().asVector3f().setY(0);
+        double distance = location.distance(playerloc);
+        distances.addLast(distance);
+        if(distances.size() > REMEMBER_VELO) {
+            distances.removeFirst();
+        }
+        double average = 0;
+        for(double d : distances) average += d;
+        average /= distances.size();
+        if(average <= 0.1)  {
             response.setCheating(true);
         }
+
+        if(distance > 0.1) {
+            double anglePosition = Math.abs(Math.toDegrees(Math.atan2(playerloc.x - location.x, playerloc.z - location.z)));
+            double angleVector = Math.abs(Math.toDegrees(Math.atan2(event.getMotion().x, event.getMotion().z)));
+            double angleDiff = Math.abs(anglePosition - angleVector);
+            if(angleDiff > 30) {
+                response.setCheating(true);
+                response.getMetaData().put("angle", angleDiff);
+            }
+        }
+
         this.event = null;
         return response;
     }
