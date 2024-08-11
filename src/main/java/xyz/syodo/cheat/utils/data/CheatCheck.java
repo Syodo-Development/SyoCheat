@@ -8,7 +8,8 @@ public enum CheatCheck {
     OTHER(0),
     SPEED(20),
     TIMER(10),
-    AUTOCLICKER(20);
+    AUTOCLICKER(20),
+    REACH(20);
 
     @Getter
     @Setter
