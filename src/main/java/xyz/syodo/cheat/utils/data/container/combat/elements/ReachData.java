@@ -17,9 +17,9 @@ public class ReachData extends Data {
     @Setter
     private static int REMEMBER_HITS = 10;
     @Setter
-    private static float FLAG_REACH_AT = 4.5f;
+    private static float FLAG_REACH_AT = 4.4f;
     @Setter
-    private static float BLOCK_FLAG_REACH_AT_AVERAGE = 4.4f;
+    private static float FLAG_REACH_AT_AVERAGE = 4.5f;
 
     final LinkedHashMap<Long, ReachElement> reachElements = new LinkedHashMap<>();
 
@@ -51,8 +51,7 @@ public class ReachData extends Data {
             if(distance < lowest) lowest = distance;
             average += distance;
             if(!iterator.hasNext()) {
-                getContainer().getPlayer().getPlayer().sendMessage(distance + " " + (average/count));
-                if(distance > BLOCK_FLAG_REACH_AT_AVERAGE) {
+                if(distance > FLAG_REACH_AT) {
                     response.setCheating(true);
                     response.getMetaData().put("current", distance);
                 }
@@ -60,7 +59,7 @@ public class ReachData extends Data {
         }
         average /= count;
 
-        if (average >= FLAG_REACH_AT && count > 3) {
+        if (average >= FLAG_REACH_AT_AVERAGE && count > 3) {
             response.setCheating(true);
             response.getMetaData().put("lowest", lowest);
             response.getMetaData().put("highest", highest);
