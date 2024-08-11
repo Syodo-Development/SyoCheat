@@ -50,8 +50,8 @@ public class PlayerAuthInputData extends Data {
 
     @Override
     public CheatResponse doCheck() {
-
         CheatResponse response = new CheatResponse(CheatCheck.SPEED);
+        if(getContainer().getPlayer().getPlayer().getAllowFlight()) return response;
         int count = playerAuthInputPackets.size();
         if(count > 10) {
             long highestTimeDiff = 0;
