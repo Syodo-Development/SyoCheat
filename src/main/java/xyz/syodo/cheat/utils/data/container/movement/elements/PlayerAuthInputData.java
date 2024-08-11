@@ -24,7 +24,9 @@ public class PlayerAuthInputData extends Data {
     @Setter
     private static int REMEMBER_AVERAGE = 5;
     @Setter
-    private static double ALLOWED_DISTANCE = 0.085;
+    private static double ALLOWED_DISTANCE = 0.63;
+    @Setter
+    private static double ALLOWED_AVERAGE = 0.42;
 
     private Long teleported = System.currentTimeMillis();
 
@@ -72,6 +74,14 @@ public class PlayerAuthInputData extends Data {
                 PlayerAuthInputPacket priorPacket = playerAuthInputPackets.get(latest);
                 PlayerAuthInputPacket currentPacket = playerAuthInputPackets.get(time);
                 int tickDiff = (int) (currentPacket.tick - priorPacket.tick);
+
+                Vector3f priorLocation = priorPacket.position.clone().setY(0);
+                Vector3f currentLocation = currentPacket.position.clone().setY(0);
+                double distance = priorLocation.distance(currentLocation) * (50d/difference);
+                if(distance > 2) response.getCheck().setCheatpoints(100);
+                if(distance > highestDistanceDiff) highestDistanceDiff = distance;
+                if(distance < lowestDistanceDiff) lowestDistanceDiff = distance;
+                averageDistanceDiff += distance;
                 if(!iterator.hasNext()) {
                     response.getMetaData().put("tickDiff", tickDiff);
                     response.getMetaData().put("timeDiff", difference);
@@ -79,16 +89,11 @@ public class PlayerAuthInputData extends Data {
                         response.getMetaData().put("tickInvalidation", true);
                         return response;
                     }
+                    response.getMetaData().put("lastDistance", distance);
+                    if(distance > ALLOWED_DISTANCE*1.3f && distance < 2) {
+                        getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
+                    }
                 }
-                Vector3f priorLocation = priorPacket.position.clone().setY(0);
-                Vector3f currentLocation = currentPacket.position.clone().setY(0);
-                double distance = priorLocation.distance(currentLocation) * ((difference/1000d) * 2);
-                if(distance > 2) response.getCheck().setCheatpoints(100);
-                if(distance > highestDistanceDiff) highestDistanceDiff = distance;
-                if(distance < lowestDistanceDiff) lowestDistanceDiff = distance;
-                averageDistanceDiff += distance;
-
-                response.getMetaData().put("lastDistance", distance);
 
                 if(difference > highestTimeDiff) highestTimeDiff = difference;
                 if(difference < lowestTimeDiff) lowestTimeDiff = difference;
@@ -104,7 +109,7 @@ public class PlayerAuthInputData extends Data {
             response.getMetaData().put("highest", highestDistanceDiff);
             response.getMetaData().put("average", averageDistanceDiff);
 
-            if(averageDistanceDiff > ALLOWED_DISTANCE) {
+            if(averageDistanceDiff > ALLOWED_AVERAGE) {
                 response.setCheating(true);
             }
 
