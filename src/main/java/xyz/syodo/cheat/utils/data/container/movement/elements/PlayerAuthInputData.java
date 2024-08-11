@@ -28,6 +28,8 @@ public class PlayerAuthInputData extends Data {
     private static double ALLOWED_DISTANCE = 0.63;
     @Setter
     private static double ALLOWED_AVERAGE = 0.42;
+    @Setter
+    private static boolean TELEPORT_IF_EXCEED = true;
 
     @Getter
     private Long teleported = System.currentTimeMillis();
@@ -92,7 +94,7 @@ public class PlayerAuthInputData extends Data {
                         return response;
                     }
                     response.getMetaData().put("lastDistance", distance);
-                    if(distance > ALLOWED_DISTANCE*1.3f && distance < 2) {
+                    if(distance > ALLOWED_DISTANCE*1.3f && distance < 2 && TELEPORT_IF_EXCEED) {
                         getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
                     }
                 }
