@@ -57,8 +57,8 @@ public class PlayerTimedLocationData extends Data {
             Iterator<Location> iterator = locations.iterator();
             Location latest = iterator.next().clone().setY(0);
             while(iterator.hasNext()) {
-                Location location = iterator.next();
-                double distance = location.clone().setY(0).distance(latest);
+                Location location = iterator.next().clone().setY(0);
+                double distance = location.distance(latest);
                 if(distance > highest) highest = distance;
                 if(distance < lowest) lowest = distance;
                 average += distance;
