@@ -23,6 +23,8 @@ public class VelocityData extends Data {
 
     @Setter
     private static int REMEMBER_VELO = 3;
+    @Setter
+    private static int ALLOWED_DIFFERENCE = 30;
 
     private int clicks = 0;
 
@@ -75,7 +77,7 @@ public class VelocityData extends Data {
             double anglePosition = Math.abs(Math.toDegrees(Math.atan2(playerloc.x - location.x, playerloc.z - location.z)));
             double angleVector = Math.abs(Math.toDegrees(Math.atan2(event.getMotion().x, event.getMotion().z)));
             double angleDiff = Math.abs(anglePosition - angleVector);
-            if(angleDiff > 30) {
+            if(angleDiff > ALLOWED_DIFFERENCE) {
                 response.setCheating(true);
                 response.getMetaData().put("angle", angleDiff);
             }
