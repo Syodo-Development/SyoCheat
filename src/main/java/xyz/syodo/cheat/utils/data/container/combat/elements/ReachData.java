@@ -1,6 +1,7 @@
 package xyz.syodo.cheat.utils.data.container.combat.elements;
 
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
+import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.math.Vector3f;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
 
+import java.nio.channels.Channels;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -28,6 +30,7 @@ public class ReachData extends Data {
     }
 
     public CheatResponse addReachElement(EntityDamageByEntityEvent event) {
+        if(event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return new CheatResponse(CheatCheck.REACH);
         reachElements.putLast(System.currentTimeMillis(), new ReachElement(event));
         if(reachElements.size() > REMEMBER_HITS) {
             reachElements.remove(reachElements.firstEntry().getKey());
