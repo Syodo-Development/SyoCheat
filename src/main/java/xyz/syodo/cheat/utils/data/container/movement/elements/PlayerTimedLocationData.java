@@ -25,6 +25,8 @@ public class PlayerTimedLocationData extends Data {
     private static double ALLOWED_SINGLE_DISTANCE = 4.2d;
     @Setter
     private static double ALLOWED_AVERAGE_DISTANCE = 3.8d;
+    @Setter
+    private static boolean TELEPORT_IF_EXCEED = true;
 
     private Long teleported = System.currentTimeMillis();
 
@@ -67,7 +69,9 @@ public class PlayerTimedLocationData extends Data {
                     if(distance > ALLOWED_SINGLE_DISTANCE) {
                         response.setCheating(true);
                         response.getCheck().setCheatpoints((int) (response.getCheck().getCheatpoints() * (distance/ALLOWED_SINGLE_DISTANCE)));
-                        getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                        if(TELEPORT_IF_EXCEED) {
+                            getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                        }
                     }
                 }
             }
