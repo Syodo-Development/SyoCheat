@@ -55,10 +55,10 @@ public class PlayerTimedLocationData extends Data {
             double lowest = Integer.MAX_VALUE;
             double average = 0;
             Iterator<Location> iterator = locations.iterator();
-            Location latest = iterator.next().clone().setY(0);
+            Location latest = iterator.next();
             while(iterator.hasNext()) {
-                Location location = iterator.next().clone().setY(0);
-                double distance = location.distance(latest);
+                Location location = iterator.next();
+                double distance = location.clone().setY(0).distance(latest.clone().setY(0));
                 if(distance > highest) highest = distance;
                 if(distance < lowest) lowest = distance;
                 average += distance;
@@ -67,9 +67,7 @@ public class PlayerTimedLocationData extends Data {
                     if(distance > ALLOWED_SINGLE_DISTANCE) {
                         response.setCheating(true);
                         response.getCheck().setCheatpoints((int) (response.getCheck().getCheatpoints() * (distance/ALLOWED_SINGLE_DISTANCE)));
-                        if(distance > ALLOWED_SINGLE_DISTANCE*1.5) {
-                            getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
-                        }
+                        getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
                     }
                 }
             }
