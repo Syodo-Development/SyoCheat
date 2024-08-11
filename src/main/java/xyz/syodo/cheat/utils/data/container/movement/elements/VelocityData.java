@@ -24,7 +24,7 @@ public class VelocityData extends Data {
     @Setter
     private static int REMEMBER_VELO = 3;
     @Setter
-    private static int ALLOWED_DIFFERENCE = 30;
+    private static int ALLOWED_DIFFERENCE = 180;
 
     private int clicks = 0;
 

@@ -1,10 +1,7 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.Player;
 import cn.nukkit.event.player.PlayerTeleportEvent;
 import cn.nukkit.level.Location;
-import cn.nukkit.math.Vector3f;
-import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import lombok.Setter;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
@@ -13,7 +10,6 @@ import xyz.syodo.cheat.utils.data.Data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class PlayerTimedLocationData extends Data {

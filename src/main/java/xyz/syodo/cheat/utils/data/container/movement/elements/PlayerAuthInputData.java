@@ -1,13 +1,9 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.Player;
-import cn.nukkit.event.player.PlayerTeleportEvent;
-import cn.nukkit.level.Location;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import lombok.Getter;
 import lombok.Setter;
-import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
@@ -81,10 +77,12 @@ public class PlayerAuthInputData extends Data {
 
                 Vector3f priorLocation = priorPacket.position.clone().setY(0);
                 Vector3f currentLocation = currentPacket.position.clone().setY(0);
+                if(difference < 40) difference = 40;
                 double distance = priorLocation.distance(currentLocation) * (50d/difference);
                 if(distance > 2) response.getCheck().setCheatpoints(100);
                 if(distance > highestDistanceDiff) highestDistanceDiff = distance;
                 if(distance < lowestDistanceDiff) lowestDistanceDiff = distance;
+
                 averageDistanceDiff += distance;
                 if(!iterator.hasNext()) {
                     response.getMetaData().put("tickDiff", tickDiff);
@@ -97,6 +95,7 @@ public class PlayerAuthInputData extends Data {
                     if(distance > ALLOWED_DISTANCE*1.3f && distance < 2 && TELEPORT_IF_EXCEED) {
                         getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
                     }
+
                 }
 
                 if(difference > highestTimeDiff) highestTimeDiff = difference;
