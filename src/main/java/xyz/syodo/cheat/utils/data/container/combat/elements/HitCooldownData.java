@@ -21,6 +21,7 @@ public class HitCooldownData extends Data {
         if(System.currentTimeMillis() - lastHit < 333L) {
             response.setCheating(true);
         }
+        lastHit = System.currentTimeMillis();
         return response;
     }
 
