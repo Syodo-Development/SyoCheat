@@ -11,7 +11,7 @@ import xyz.syodo.cheat.utils.CheatPlayerManager;
 public class PlayerTeleportListener implements Listener {
 
     @EventHandler
-    public void onEntityDamageByEntity(PlayerTeleportEvent event) {
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         CheatPlayer cheatPlayer = CheatPlayerManager.getPlayer(player);
         cheatPlayer.getMovementContainer().getPlayerAuthInputData().teleported();
