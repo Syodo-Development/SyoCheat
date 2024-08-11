@@ -10,6 +10,7 @@ import xyz.syodo.cheat.listeners.DataPacketReceivedListener;
 import xyz.syodo.cheat.listeners.EntityDamageByEntityListener;
 import xyz.syodo.cheat.listeners.PlayerTeleportListener;
 import xyz.syodo.cheat.task.AutoClickerTask;
+import xyz.syodo.cheat.task.PlayerTimedLocationTask;
 import xyz.syodo.database.redis.SyoRedis;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
@@ -52,7 +53,8 @@ public class SyoCheat extends PluginBase {
 
 		ServerScheduler serverScheduler = Server.getInstance().getScheduler();
 
-		serverScheduler.scheduleDelayedRepeatingTask(new AutoClickerTask(), 20, 10);
+		serverScheduler.scheduleDelayedRepeatingTask(new AutoClickerTask(), 10, 10);
+		serverScheduler.scheduleDelayedRepeatingTask(new PlayerTimedLocationTask(), 10, 10);
 
 	}
 	
