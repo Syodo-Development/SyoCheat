@@ -10,6 +10,7 @@ import xyz.syodo.cheat.utils.data.container.combat.CombatContainer;
 import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 import xyz.syodo.cloud.CloudAPI;
 import xyz.syodo.communication.message.Message;
+import xyz.syodo.database.sql.SyoSQL;
 
 import java.util.HashMap;
 
@@ -18,8 +19,8 @@ public class CheatPlayer {
 
 	//Static variables
 	private static final int KICK_POINTS = 100;
-	private static final int KICK_COUNT_SPECIFIC = 3;
-	private static final long REMOVAL_TIME = 300000; //5 minutes
+	private static final int KICK_COUNT_SPECIFIC = 4;
+	private static final long REMOVAL_TIME = 150000; //2.5 minutes
 
 
 	private final Player player;
@@ -45,18 +46,24 @@ public class CheatPlayer {
 		for(Long l : cheatResponses.keySet().stream().toList()) {
 			if(time - l > REMOVAL_TIME) {
 				cheatResponses.remove(l);
-			} else{
+			} else {
 				CheatResponse cheatResponse = cheatResponses.get(l);
 				cheatpoints += cheatResponses.get(l).getCheck().getCheatpoints();
 				if(cheatResponse.getCheck() == response.getCheck()) countSpecific++;
 			}
 		}
-
-		if(cheatpoints >= KICK_POINTS) {
-			this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
-			this.getPlayer().close();
-			Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
+		if(cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC) {
+			if(!this.getPlayer().hasPermission("syocheat.bypass")) {
+				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
+				this.getPlayer().kick("", false);
+				response.getMetaData().put("kick", cheatpoints >= KICK_POINTS ? "POINTS" : "COUNT_SPECIFIC");
+				Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
+			} else {
+				cheatResponses.clear();
+				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "Your CheatPoints were reset.");
+			}
 		}
+		logCheatResponse(response);
 	}
 
 	public void sendProxyMessage(CheatResponse response) {
@@ -70,4 +77,12 @@ public class CheatPlayer {
 		message.build().send();
 	}
 
+	private void logCheatResponse(CheatResponse response) {
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("userid", getPlayer().getUniqueId().toString());
+		values.put("type", response.getCheck().name());
+		values.put("server", CloudAPI.get().getCurrentService().name());
+		values.put("metadata", new JSONObject(response.getMetaData()).toString());
+		SyoSQL.insertRow("Moderation.cheatlogs", values);
+	}
 }
