@@ -17,6 +17,7 @@ public class PlayerMotionListener implements Listener {
         if(!event.isCancelled()) {
             if(event.getEntity() instanceof Player player) {
                 CheatPlayer cheatPlayer = CheatPlayerManager.getPlayer(player);
+                if(System.currentTimeMillis() - cheatPlayer.getMovementContainer().getPlayerAuthInputData().getTeleported() < 20) return;
                 if(cheatPlayer.getMovementContainer().getVelocityData().setMotion(event)) {
                     Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
                         cheatPlayer.addResponse(cheatPlayer.getMovementContainer().getVelocityData().doCheck());
