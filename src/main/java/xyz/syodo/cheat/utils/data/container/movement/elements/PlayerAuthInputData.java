@@ -5,6 +5,7 @@ import cn.nukkit.event.player.PlayerTeleportEvent;
 import cn.nukkit.level.Location;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
+import lombok.Getter;
 import lombok.Setter;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatCheck;
@@ -28,6 +29,7 @@ public class PlayerAuthInputData extends Data {
     @Setter
     private static double ALLOWED_AVERAGE = 0.42;
 
+    @Getter
     private Long teleported = System.currentTimeMillis();
 
     final LinkedHashMap<Long, PlayerAuthInputPacket> playerAuthInputPackets = new LinkedHashMap<>();
