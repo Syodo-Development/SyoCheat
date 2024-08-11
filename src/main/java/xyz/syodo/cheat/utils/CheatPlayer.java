@@ -64,6 +64,7 @@ public class CheatPlayer {
 			}
 		}
 		logCheatResponse(response);
+		sendProxyMessage(response);
 	}
 
 	public void sendProxyMessage(CheatResponse response) {
@@ -74,6 +75,8 @@ public class CheatPlayer {
 				CloudAPI.get().getCurrentService().name(),
 				response.getCheck().name().toUpperCase(),
 				new JSONObject(response.getMetaData()).toString());
+		message.build().send();
+		message.setTo("discord");
 		message.build().send();
 	}
 
