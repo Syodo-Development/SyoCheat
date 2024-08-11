@@ -26,7 +26,6 @@ public class PlayerAuthInputData extends Data {
     @Setter
     private static double ALLOWED_DISTANCE = 0.085;
 
-
     private Long teleported = System.currentTimeMillis();
 
     final LinkedHashMap<Long, PlayerAuthInputPacket> playerAuthInputPackets = new LinkedHashMap<>();
