@@ -39,7 +39,7 @@ public class PlayerTimedLocationData extends Data {
             locations.clear();
             return new CheatResponse(CheatCheck.OTHER);
         }
-        locations.addLast(getContainer().getPlayer().getPlayer().getLocation().clone().setY(0));
+        locations.addLast(getContainer().getPlayer().getPlayer().getLocation().clone());
         if(locations.size() > REMEMBER_LOCATIONS) {
             locations.removeFirst();
         }
@@ -55,10 +55,10 @@ public class PlayerTimedLocationData extends Data {
             double lowest = Integer.MAX_VALUE;
             double average = 0;
             Iterator<Location> iterator = locations.iterator();
-            Location latest = iterator.next();
+            Location latest = iterator.next().clone().setY(0);
             while(iterator.hasNext()) {
                 Location location = iterator.next();
-                double distance = location.distance(latest);
+                double distance = location.clone().setY(0).distance(latest);
                 if(distance > highest) highest = distance;
                 if(distance < lowest) lowest = distance;
                 average += distance;
