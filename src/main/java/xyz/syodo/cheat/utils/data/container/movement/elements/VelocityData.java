@@ -30,7 +30,7 @@ public class VelocityData extends Data {
 
     private EntityMotionEvent event;
     private Vector3f location;
-
+    private Long damaged = System.currentTimeMillis();
     private DoubleArrayList distances = new DoubleArrayList();
 
     public VelocityData(Container container) {
@@ -73,7 +73,7 @@ public class VelocityData extends Data {
             response.setCheating(true);
         }
 
-        if(distance > 0.1) {
+        if(distance > 0.1 && System.currentTimeMillis() - damaged > 1000) {
             double anglePosition = Math.abs(Math.toDegrees(Math.atan2(playerloc.x - location.x, playerloc.z - location.z)));
             double angleVector = Math.abs(Math.toDegrees(Math.atan2(event.getMotion().x, event.getMotion().z)));
             double angleDiff = Math.abs(anglePosition - angleVector);
@@ -85,5 +85,9 @@ public class VelocityData extends Data {
 
         this.event = null;
         return response;
+    }
+
+    public void damaged() {
+        this.damaged = System.currentTimeMillis();
     }
 }
