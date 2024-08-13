@@ -32,7 +32,7 @@ public class DataPacketReceivedListener implements Listener {
             }
         } else if(packet instanceof PlayerAuthInputPacket playerAuthInputPacket) {
             CheatResponse response = cheatPlayer.getMovementContainer().getPlayerAuthInputData().addPacket(playerAuthInputPacket);
-            //cheatPlayer.addResponse(response);
+            cheatPlayer.addResponse(response);
         }
     }
 

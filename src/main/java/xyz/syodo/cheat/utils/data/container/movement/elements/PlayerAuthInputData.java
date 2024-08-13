@@ -44,7 +44,7 @@ public class PlayerAuthInputData extends Data {
         }
         playerAuthInputPackets.putLast(System.currentTimeMillis(), packet);
         if(playerAuthInputPackets.size() > REMEMBER_PACKETS) {
-            playerAuthInputPackets.remove(playerAuthInputPackets.firstEntry().getKey());
+            playerAuthInputPackets.remove(playerAuthInputPackets.sequencedKeySet().getFirst());
         }
         return doCheck();
     }
