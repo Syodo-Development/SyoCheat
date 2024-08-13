@@ -21,6 +21,7 @@ public class EntityDamageByEntityListener implements Listener {
             }
             if(!event.isCancelled()) {
                 CheatResponse response = cheatPlayer.getCombatContainer().getReachData().addReachElement(event);
+                cheatPlayer.getMovementContainer().getVelocityData().damaged();
                 if(response.isCheating()) {
                     event.setCancelled();
                     cheatPlayer.addResponse(response);
