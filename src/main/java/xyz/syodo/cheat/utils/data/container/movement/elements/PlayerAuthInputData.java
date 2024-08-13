@@ -63,12 +63,11 @@ public class PlayerAuthInputData extends Data {
             double lowestDistanceDiff = Integer.MAX_VALUE;
             double averageDistanceDiff = 0;
 
-            Iterator<Long> iterator = playerAuthInputPackets.keySet().iterator();
+            Iterator<Long> iterator = playerAuthInputPackets.sequencedKeySet().iterator();
             long latest = iterator.next();
             while(iterator.hasNext()) {
 
                 Long time = iterator.next();
-
                 long difference = time - latest;
 
                 PlayerAuthInputPacket priorPacket = playerAuthInputPackets.get(latest);
@@ -95,7 +94,6 @@ public class PlayerAuthInputData extends Data {
                     if(distance > ALLOWED_DISTANCE*1.3f && distance < 2 && TELEPORT_IF_EXCEED) {
                         getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
                     }
-
                 }
 
                 if(difference > highestTimeDiff) highestTimeDiff = difference;
