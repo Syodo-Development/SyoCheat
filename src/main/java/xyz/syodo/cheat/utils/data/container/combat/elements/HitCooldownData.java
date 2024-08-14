@@ -20,8 +20,9 @@ public class HitCooldownData extends Data {
         CheatResponse response = new CheatResponse(CheatCheck.OTHER);
         if(System.currentTimeMillis() - lastHit < 333L) {
             response.setCheating(true);
+        } else {
+            lastHit = System.currentTimeMillis();
         }
-        lastHit = System.currentTimeMillis();
         return response;
     }
 
