@@ -69,7 +69,7 @@ public class CheatPlayer {
 		}
 	}
 
-	public void sendProxyMessage(CheatResponse response) {
+	private void sendProxyMessage(CheatResponse response) {
 		Message.Builder message = new Message.Builder();
 		message.setTo("proxy");
 		message.appendMany("SyoCheatMessage",
