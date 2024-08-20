@@ -7,10 +7,12 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import lombok.Getter;
 
 public class CheatPlayerManager implements Listener {
 
-	public static Object2ObjectOpenHashMap<String, CheatPlayer> players = new Object2ObjectOpenHashMap<>();
+	@Getter
+	private static Object2ObjectOpenHashMap<String, CheatPlayer> players = new Object2ObjectOpenHashMap<>();
 	
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
@@ -25,7 +27,7 @@ public class CheatPlayerManager implements Listener {
 	}
 	
 	public static CheatPlayer getPlayer(Player p) {
-		return players.get(p.getName());
+		return players.getOrDefault(p.getName(), getPlayer(p));
 	}
 
 	public CheatPlayerManager() {
