@@ -3,6 +3,7 @@ package xyz.syodo.cheat.utils;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import lombok.Getter;
+import lombok.Setter;
 import org.json.JSONObject;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatResponse;
@@ -15,13 +16,13 @@ import xyz.syodo.database.sql.SyoSQL;
 import java.util.HashMap;
 
 @Getter
+@Setter
 public class CheatPlayer {
 
 	//Static variables
-	private static final int KICK_POINTS = 100;
-	private static final int KICK_COUNT_SPECIFIC = 4;
-	private static final long REMOVAL_TIME = 150000; //2.5 minutes
-
+	private static int KICK_POINTS = 100;
+	private static int KICK_COUNT_SPECIFIC = 4;
+	private static long REMOVAL_TIME = 150000; //2.5 minutes
 
 	private final Player player;
 
@@ -63,7 +64,9 @@ public class CheatPlayer {
 			}
 		}
 		logCheatResponse(response);
-		sendProxyMessage(response);
+		if(countSpecific >= response.getCheck().getBroadcastRequirement()) {
+			sendProxyMessage(response);
+		}
 	}
 
 	public void sendProxyMessage(CheatResponse response) {
