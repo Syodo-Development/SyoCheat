@@ -19,7 +19,7 @@ public class ReachData extends Data {
     @Setter
     private static int REMEMBER_HITS = 10;
     @Setter
-    private static float FLAG_REACH_AT = 4.4f;
+    private static float FLAG_REACH_AT = 4.6f;
     @Setter
     private static float FLAG_REACH_AT_AVERAGE = 4.5f;
 
