@@ -64,6 +64,7 @@ public class ReachData extends Data {
 
         if (average >= FLAG_REACH_AT_AVERAGE && count > 3) {
             response.setCheating(true);
+            response.getCheck().setBroadcastRequirement(1);
             response.getMetaData().put("lowest", lowest);
             response.getMetaData().put("highest", highest);
             response.getMetaData().put("average", average);
