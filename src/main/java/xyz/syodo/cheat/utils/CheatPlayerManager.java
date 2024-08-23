@@ -27,7 +27,12 @@ public class CheatPlayerManager implements Listener {
 	}
 	
 	public static CheatPlayer getPlayer(Player p) {
-		return players.getOrDefault(p.getName(), getPlayer(p));
+		CheatPlayer player = players.get(p.getName());
+		if(player == null) {
+			player = new CheatPlayer(p);
+			players.put(p.getName(), player);
+		}
+		return player;
 	}
 
 	public CheatPlayerManager() {
