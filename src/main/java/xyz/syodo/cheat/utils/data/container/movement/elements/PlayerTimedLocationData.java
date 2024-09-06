@@ -52,7 +52,7 @@ public class PlayerTimedLocationData extends Data {
             double highest = 0;
             double lowest = Integer.MAX_VALUE;
             double average = 0;
-            Iterator<Location> iterator = locations.iterator();
+            Iterator<Location> iterator = new ArrayList<Location>(locations).iterator();
             Location latest = iterator.next();
             while(iterator.hasNext()) {
                 Location location = iterator.next();
