@@ -112,6 +112,7 @@ public class PlayerAuthInputData extends Data {
 
             if(averageDistanceDiff > ALLOWED_AVERAGE) {
                 response.setCheating(true);
+                response.getMetaData().put("trigger", "INPUT AVERAGE (" + ALLOWED_AVERAGE + ")");
             }
 
             if(playerAuthInputPackets.get(latest).tick%10 == 0) {
