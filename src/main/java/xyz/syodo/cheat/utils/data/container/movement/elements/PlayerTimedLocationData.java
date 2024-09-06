@@ -64,6 +64,7 @@ public class PlayerTimedLocationData extends Data {
                 if(!iterator.hasNext()) {
                     if(distance > ALLOWED_SINGLE_DISTANCE) {
                         response.setCheating(true);
+                        response.getMetaData().put("trigger", "TIMED SINGLE (" + ALLOWED_AVERAGE_DISTANCE + ")");
                         response.getCheck().setCheatpoints((int) (response.getCheck().getCheatpoints() * (distance/ALLOWED_SINGLE_DISTANCE)));
                         if(TELEPORT_IF_EXCEED) {
                             getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
@@ -77,6 +78,7 @@ public class PlayerTimedLocationData extends Data {
             response.getMetaData().put("average", average);
             if(average > ALLOWED_AVERAGE_DISTANCE) {
                 response.setCheating(true);
+                response.getMetaData().put("trigger", "TIMED AVERAGE (" + ALLOWED_AVERAGE_DISTANCE + ")");
                 for(int i = 0; i < (REMEMBER_LOCATIONS / 3) * 2; i++) locations.removeFirst();
             }
         }
