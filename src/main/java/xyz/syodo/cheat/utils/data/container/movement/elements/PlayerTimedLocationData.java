@@ -79,7 +79,11 @@ public class PlayerTimedLocationData extends Data {
             if(average > ALLOWED_AVERAGE_DISTANCE) {
                 response.setCheating(true);
                 response.getMetaData().put("trigger", "TIMED AVERAGE (" + ALLOWED_AVERAGE_DISTANCE + ")");
-                for(int i = 0; i < (REMEMBER_LOCATIONS / 3) * 2; i++) locations.removeFirst();
+                for(int i = 0; i < (REMEMBER_LOCATIONS / 3) * 2; i++) {
+                    if(!locations.isEmpty()) {
+                        locations.removeFirst();
+                    } else break;
+                }
             }
         }
         return  response;
