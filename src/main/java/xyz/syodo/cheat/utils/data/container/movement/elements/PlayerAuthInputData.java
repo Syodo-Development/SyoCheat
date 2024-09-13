@@ -43,7 +43,7 @@ public class PlayerAuthInputData extends Data {
             return new CheatResponse(CheatCheck.OTHER);
         }
         playerAuthInputPackets.putLast(System.currentTimeMillis(), packet);
-        if(playerAuthInputPackets.size() > REMEMBER_PACKETS) {
+        while (playerAuthInputPackets.size() > REMEMBER_PACKETS) {
             playerAuthInputPackets.remove(playerAuthInputPackets.sequencedKeySet().getFirst());
         }
         return doCheck();

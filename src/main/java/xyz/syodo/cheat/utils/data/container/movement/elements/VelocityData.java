@@ -63,7 +63,7 @@ public class VelocityData extends Data {
         Vector3f playerloc = getContainer().getPlayer().getPlayer().asVector3f().setY(0);
         double distance = location.distance(playerloc);
         distances.addLast(distance);
-        if(distances.size() > REMEMBER_VELO) {
+        while (distances.size() > REMEMBER_VELO) {
             distances.removeFirst();
         }
         double average = 0;

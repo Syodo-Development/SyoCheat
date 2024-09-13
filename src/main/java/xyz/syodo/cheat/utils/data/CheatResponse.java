@@ -1,12 +1,10 @@
 package xyz.syodo.cheat.utils.data;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 @RequiredArgsConstructor
 @Getter
@@ -15,7 +13,7 @@ public class CheatResponse {
 
     private final CheatCheck check;
     private boolean cheating = false;
-    private final LinkedHashMap<String, Object> metaData = new LinkedHashMap<>();
+    private final Object2ObjectLinkedOpenHashMap<String, Object> metaData = new Object2ObjectLinkedOpenHashMap<>();
 
     public String toString() {
         return this.getClass().getSimpleName() + "[" + check.name().toUpperCase() + ", cheating=" + cheating + ", metadata=" + new JSONObject(metaData).toString() + "]";

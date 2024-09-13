@@ -38,7 +38,7 @@ public class PlayerTimedLocationData extends Data {
             return new CheatResponse(CheatCheck.OTHER);
         }
         locations.addLast(getContainer().getPlayer().getPlayer().getLocation().clone());
-        if(locations.size() > REMEMBER_LOCATIONS) {
+        while (locations.size() > REMEMBER_LOCATIONS) {
             locations.removeFirst();
         }
         return doCheck();
@@ -52,7 +52,7 @@ public class PlayerTimedLocationData extends Data {
             double highest = 0;
             double lowest = Integer.MAX_VALUE;
             double average = 0;
-            Iterator<Location> iterator = new ArrayList<Location>(locations).iterator();
+            Iterator<Location> iterator = new ArrayList<>(locations).iterator();
             Location latest = iterator.next();
             while(iterator.hasNext()) {
                 Location location = iterator.next();
@@ -86,7 +86,7 @@ public class PlayerTimedLocationData extends Data {
                 }
             }
         }
-        return  response;
+        return response;
     }
 
     public void teleported() {

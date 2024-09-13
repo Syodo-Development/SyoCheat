@@ -28,7 +28,7 @@ public class CPSData extends Data {
     public CheatResponse saveCPS() {
         CPS.addLast(clicks);
         clicks = 0;
-        if(CPS.size() > REMEMBER_CPS) {
+        while (CPS.size() > REMEMBER_CPS) {
             CPS.removeFirst();
         }
         return doCheck();
@@ -46,7 +46,7 @@ public class CPSData extends Data {
             if(i < lowest) lowest = i;
             average += i;
         }
-        average /= (double) count;
+        average /= count;
 
         if (average >= 6.0D && count > 7 && lowest >= 4.0D && average - lowest < average / 5.0D) {
             response.setCheating(true);

@@ -2,6 +2,8 @@ package xyz.syodo.cheat.utils;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONObject;
@@ -12,8 +14,6 @@ import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 import xyz.syodo.cloud.CloudAPI;
 import xyz.syodo.communication.message.Message;
 import xyz.syodo.database.sql.SyoSQL;
-
-import java.util.HashMap;
 
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class CheatPlayer {
 	private final MovementContainer movementContainer = new MovementContainer(this);
 
 	//Cheat History
-	private final HashMap<Long, CheatResponse> cheatResponses = new HashMap<>();
+	private final Long2ObjectOpenHashMap<CheatResponse> cheatResponses = new Long2ObjectOpenHashMap<>();
 
 	public CheatPlayer(Player player) {
 		this.player = player;
@@ -83,7 +83,7 @@ public class CheatPlayer {
 	}
 
 	private void logCheatResponse(CheatResponse response) {
-		HashMap<String, Object> values = new HashMap<>();
+		Object2ObjectOpenHashMap<String, Object> values = new Object2ObjectOpenHashMap<>();
 		values.put("userid", getPlayer().getUniqueId().toString());
 		values.put("type", response.getCheck().name());
 		values.put("server", CloudAPI.get().getCurrentService().name());
