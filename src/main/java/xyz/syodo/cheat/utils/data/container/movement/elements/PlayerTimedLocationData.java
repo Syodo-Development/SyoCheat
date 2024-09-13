@@ -18,9 +18,9 @@ public class PlayerTimedLocationData extends Data {
     private static int REMEMBER_LOCATIONS = 20;
 
     @Setter
-    private static double ALLOWED_SINGLE_DISTANCE = 4.2d;
+    private static double ALLOWED_SINGLE_DISTANCE = 4.4d;
     @Setter
-    private static double ALLOWED_AVERAGE_DISTANCE = 3.8d;
+    private static double ALLOWED_AVERAGE_DISTANCE = 4.3d;
     @Setter
     private static boolean TELEPORT_IF_EXCEED = true;
 
@@ -52,7 +52,11 @@ public class PlayerTimedLocationData extends Data {
             double highest = 0;
             double lowest = Integer.MAX_VALUE;
             double average = 0;
-            Iterator<Location> iterator = new ArrayList<>(locations).iterator();
+            
+            List<Location> clonedList = new ArrayList<>();
+            for(Location location : locations) clonedList.add(location);
+            Iterator<Location> iterator = clonedList.iterator();
+
             Location latest = iterator.next();
             while(iterator.hasNext()) {
                 Location location = iterator.next();
@@ -64,7 +68,8 @@ public class PlayerTimedLocationData extends Data {
                 if(!iterator.hasNext()) {
                     if(distance > ALLOWED_SINGLE_DISTANCE) {
                         response.setCheating(true);
-                        response.getMetaData().put("trigger", "TIMED SINGLE (" + ALLOWED_AVERAGE_DISTANCE + ")");
+                        response.getMetaData().put("distance", distance);
+                        response.getMetaData().put("trigger", "TIMED SINGLE (" + ALLOWED_SINGLE_DISTANCE + ")");
                         response.getCheck().setCheatpoints((int) (response.getCheck().getCheatpoints() * (distance/ALLOWED_SINGLE_DISTANCE)));
                         if(TELEPORT_IF_EXCEED) {
                             getContainer().getPlayer().getPlayer().teleport(latest, PlayerTeleportEvent.TeleportCause.PLUGIN);
@@ -73,16 +78,18 @@ public class PlayerTimedLocationData extends Data {
                 }
             }
             average /= locations.size();
-            response.getMetaData().put("lowest", lowest);
-            response.getMetaData().put("highest", highest);
-            response.getMetaData().put("average", average);
-            if(average > ALLOWED_AVERAGE_DISTANCE) {
-                response.setCheating(true);
-                response.getMetaData().put("trigger", "TIMED AVERAGE (" + ALLOWED_AVERAGE_DISTANCE + ")");
-                for(int i = 0; i < (REMEMBER_LOCATIONS / 3) * 2; i++) {
-                    if(!locations.isEmpty()) {
-                        locations.removeFirst();
-                    } else break;
+            if(Double.isFinite(average)) {
+                response.getMetaData().put("lowest", lowest);
+                response.getMetaData().put("highest", highest);
+                response.getMetaData().put("average", average);
+                if(average > ALLOWED_AVERAGE_DISTANCE) {
+                    response.setCheating(true);
+                    response.getMetaData().put("trigger", "TIMED AVERAGE (" + ALLOWED_AVERAGE_DISTANCE + ")");
+                    for(int i = 0; i < (REMEMBER_LOCATIONS / 3) * 2; i++) {
+                        if(!locations.isEmpty()) {
+                            locations.removeFirst();
+                        } else break;
+                    }
                 }
             }
         }
