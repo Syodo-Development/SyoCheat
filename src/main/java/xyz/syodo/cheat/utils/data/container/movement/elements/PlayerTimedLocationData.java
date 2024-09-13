@@ -52,7 +52,7 @@ public class PlayerTimedLocationData extends Data {
             double highest = 0;
             double lowest = Integer.MAX_VALUE;
             double average = 0;
-            
+
             List<Location> clonedList = new ArrayList<>();
             for(Location location : locations) clonedList.add(location);
             Iterator<Location> iterator = clonedList.iterator();
