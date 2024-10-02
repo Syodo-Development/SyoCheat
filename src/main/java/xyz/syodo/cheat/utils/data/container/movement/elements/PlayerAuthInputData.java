@@ -1,5 +1,7 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
+import cn.nukkit.Player;
+import cn.nukkit.entity.effect.EffectType;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import lombok.Getter;
@@ -55,6 +57,16 @@ public class PlayerAuthInputData extends Data {
         if(getContainer().getPlayer().getPlayer().getAllowFlight()) return response;
         int count = playerAuthInputPackets.size();
         if(count > 10) {
+
+            double ALLOWED_DISTANCE = PlayerAuthInputData.ALLOWED_DISTANCE;
+            double ALLOWED_AVERAGE = PlayerAuthInputData.ALLOWED_AVERAGE;
+
+            Player p = getContainer().getPlayer().getPlayer();
+            if(p.hasEffect(EffectType.SPEED)) {
+                int speed = p.getEffect(EffectType.SPEED).getAmplifier();
+                ALLOWED_DISTANCE += (speed*0.5);
+            }
+
             long highestTimeDiff = 0;
             long lowestTimeDiff = Integer.MAX_VALUE;
             long averageTimeDiff = 0;
