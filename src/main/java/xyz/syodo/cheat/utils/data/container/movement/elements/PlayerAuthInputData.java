@@ -105,6 +105,7 @@ public class PlayerAuthInputData extends Data {
                     response.getMetaData().put("lastDistance", distance);
                     if(distance > ALLOWED_DISTANCE*1.3f && distance < 2 && TELEPORT_IF_EXCEED) {
                         getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
+                        return response;
                     }
                 }
 
