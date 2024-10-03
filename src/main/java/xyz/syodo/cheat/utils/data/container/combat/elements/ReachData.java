@@ -23,7 +23,7 @@ public class ReachData extends Data {
     @Setter
     private static float FLAG_REACH_AT_AVERAGE = 4.5f;
 
-    final LinkedHashMap<Long, ReachElement> reachElements = new LinkedHashMap<>();
+    final Long2ObjectLinkedOpenHashMap<ReachElement> reachElements = new Long2ObjectLinkedOpenHashMap<>();
 
     public ReachData(Container container) {
         super(container);
@@ -33,7 +33,7 @@ public class ReachData extends Data {
         if(event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return new CheatResponse(CheatCheck.REACH);
         reachElements.putLast(System.currentTimeMillis(), new ReachElement(event));
         while (reachElements.size() > REMEMBER_HITS) {
-            reachElements.remove((long) reachElements.firstEntry().getKey());
+            reachElements.remove(reachElements.firstLongKey());
         }
         return doCheck();
     }
