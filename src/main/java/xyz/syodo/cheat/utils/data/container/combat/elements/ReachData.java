@@ -12,6 +12,7 @@ import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 public class ReachData extends Data {
 
@@ -22,7 +23,7 @@ public class ReachData extends Data {
     @Setter
     private static float FLAG_REACH_AT_AVERAGE = 4.5f;
 
-    final Long2ObjectLinkedOpenHashMap<ReachElement> reachElements = new Long2ObjectLinkedOpenHashMap<>();
+    final LinkedHashMap<Long, ReachElement> reachElements = new LinkedHashMap<>();
 
     public ReachData(Container container) {
         super(container);
