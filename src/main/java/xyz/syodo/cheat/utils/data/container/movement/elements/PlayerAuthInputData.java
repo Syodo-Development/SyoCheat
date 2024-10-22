@@ -1,5 +1,6 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
+import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
 import cn.nukkit.entity.effect.EffectType;
 import cn.nukkit.math.Vector3f;
@@ -54,7 +55,10 @@ public class PlayerAuthInputData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.SPEED);
-        if(getContainer().getPlayer().getPlayer().getAllowFlight()) return response;
+        if(getContainer().getPlayer().getPlayer().getAllowFlight()) {
+            if(!playerAuthInputPackets.isEmpty()) playerAuthInputPackets.clear();
+            return response;
+        }
         int count = playerAuthInputPackets.size();
         if(count > 10) {
 
