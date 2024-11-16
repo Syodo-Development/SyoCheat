@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.container.combat.CombatContainer;
+import xyz.syodo.cheat.utils.data.container.combat.elements.AimBotData;
 import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 import xyz.syodo.cloud.CloudAPI;
 import xyz.syodo.communication.message.Message;
@@ -29,6 +30,7 @@ public class CheatPlayer {
 	//Containers
 	private final CombatContainer combatContainer = new CombatContainer(this);
 	private final MovementContainer movementContainer = new MovementContainer(this);
+
 
 	//Cheat History
 	private final Long2ObjectOpenHashMap<CheatResponse> cheatResponses = new Long2ObjectOpenHashMap<>();

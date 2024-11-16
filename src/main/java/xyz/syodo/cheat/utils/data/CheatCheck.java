@@ -11,6 +11,7 @@ public enum CheatCheck {
     AUTOCLICKER(20),
     REACH(20, 2),
     VELOCITY(20),
+    AIMBOT(20),
     FLY(34,2);
 
     @Getter

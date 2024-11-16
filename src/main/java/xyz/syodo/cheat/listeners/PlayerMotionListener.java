@@ -21,7 +21,7 @@ public class PlayerMotionListener implements Listener {
                 if(cheatPlayer.getMovementContainer().getVelocityData().setMotion(event)) {
                     Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
                         cheatPlayer.addResponse(cheatPlayer.getMovementContainer().getVelocityData().doCheck());
-                    }, 5);
+                    }, 10);
                 }
             }
         }

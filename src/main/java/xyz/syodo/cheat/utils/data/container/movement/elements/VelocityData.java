@@ -1,6 +1,7 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.event.entity.EntityMotionEvent;
 import cn.nukkit.level.ParticleEffect;
@@ -69,7 +70,12 @@ public class VelocityData extends Data {
         double average = 0;
         for(double d : distances) average += d;
         average /= distances.size();
-        if(average <= 0.1)  {
+        if(event.getMotion().length() < 0.5) {
+            return new CheatResponse(CheatCheck.OTHER);
+        }
+        if(average <= event.getMotion().length()) {
+            response.getMetaData().put("average", average);
+            response.getMetaData().put("length", event.getMotion().length());
             response.setCheating(true);
         }
 
