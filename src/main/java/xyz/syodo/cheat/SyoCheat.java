@@ -45,6 +45,7 @@ public class SyoCheat extends PluginBase {
 		pluginManager.registerEvents(new DataPacketReceivedListener(), plugin);
 		pluginManager.registerEvents(new PlayerTeleportListener(), plugin);
 		pluginManager.registerEvents(new PlayerMotionListener(), plugin);
+		pluginManager.registerEvents(new PlayerToggleFlightListener(), plugin);
 
 	}
 
