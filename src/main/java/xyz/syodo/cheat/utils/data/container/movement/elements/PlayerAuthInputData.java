@@ -88,7 +88,7 @@ public class PlayerAuthInputData extends Data {
 
                 PlayerAuthInputPacket priorPacket = playerAuthInputPackets.get(latest);
                 PlayerAuthInputPacket currentPacket = playerAuthInputPackets.get(time);
-                int tickDiff = (int) (currentPacket.tick - priorPacket.tick);
+                int tickDiff = (int) (currentPacket.tick.getInputTick() - priorPacket.tick.getInputTick());
 
                 Vector3f priorLocation = priorPacket.position.clone().setY(0);
                 Vector3f currentLocation = currentPacket.position.clone().setY(0);
@@ -132,7 +132,7 @@ public class PlayerAuthInputData extends Data {
                 response.getMetaData().put("trigger", "INPUT AVERAGE (" + ALLOWED_AVERAGE + ")");
             }
 
-            if(playerAuthInputPackets.get(latest).tick%10 == 0) {
+            if(playerAuthInputPackets.get(latest).tick.getInputTick() % 10 == 0) {
                 averages.addLast(averageDistanceDiff);
                 int averageCount = averages.size();
                 if(averageCount > REMEMBER_AVERAGE) {
