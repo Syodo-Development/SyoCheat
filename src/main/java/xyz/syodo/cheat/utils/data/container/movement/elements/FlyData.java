@@ -1,8 +1,13 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
+import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.block.*;
 import cn.nukkit.event.entity.EntityMotionEvent;
+import cn.nukkit.level.ParticleEffect;
 import cn.nukkit.math.AxisAlignedBB;
+import cn.nukkit.math.SimpleAxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.Getter;
@@ -12,10 +17,15 @@ import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class FlyData extends Data {
 
     @Setter
-    private static int REQUIRED_MISSMATCH = 20;
+    private static int REQUIRED_MISSMATCH = 5;
+    @Setter
+    private static boolean INTERUPT_VANILLA_FLY = true;
 
     @Getter
     private long lastToggleFlight = System.currentTimeMillis();
@@ -32,21 +42,9 @@ public class FlyData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.FLY);
-        if(true) return response;
         Player player = getContainer().getPlayer().getPlayer();
-        boolean isTrueOnGround = false;
-        AxisAlignedBB box = player.getBoundingBox().grow(0,.7,0).offset(0, -.6, 0);
-        for(int x = (int) box.getMinX(); x < box.getMaxX(); x++) {
-            for(int z = (int) box.getMinZ(); z < box.getMaxZ(); z++) {
-                for(int y = (int) box.getMinY(); y < box.getMaxY(); y++) {
-                    if(!player.getLevel().getBlock(x, y, z).isAir()) {
-                        isTrueOnGround = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if(!isTrueOnGround) {
+        AxisAlignedBB box = new SimpleAxisAlignedBB(new Vector3(player.getX()-.5, player.getY()-2, player.getZ()-.5).floor(), new Vector3(player.getX()+.5, player.getY()+2, player.getZ()+.5).ceil());
+        if(!player.getAllowFlight() && player.level.getCollisionBlocks(box, false, true).length == 0) {
             FlightEntry entry = new FlightEntry();
             if(lastEntry != null) {
                 if(lastMotion != null) {
@@ -54,7 +52,15 @@ public class FlyData extends Data {
                         return response;
                     }
                 }
-                if(lastEntry.Y >= entry.Y) {
+                if(lastEntry.Y <= entry.Y) {
+                    if(lastEntry.Y == entry.Y)  {
+                        if(Arrays.stream(player.level.getCollisionBlocks(player.getBoundingBox(), false, true)).anyMatch(b -> b instanceof BlockFlowable)) return response;
+                    }
+                    response.getMetaData().put("airtime", entry.getAirTime());
+                    response.getMetaData().put("difference", entry.Y - lastEntry.Y);
+                    if(INTERUPT_VANILLA_FLY) {
+                        player.getAdventureSettings().sendAbilities(Collections.singleton(player));
+                    }
                     if(flyMismatch++ >= REQUIRED_MISSMATCH) {
                         response.setCheating(true);
                         lastEntry = null;
@@ -66,8 +72,7 @@ public class FlyData extends Data {
             lastEntry = entry;
         } else {
             if(flyMismatch != 0) {
-                lastEntry = null;
-                flyMismatch = 0;
+                teleported();
             }
         }
         return response;
@@ -94,4 +99,8 @@ public class FlyData extends Data {
         }
     }
 
+    public void teleported() {
+        lastEntry = null;
+        flyMismatch = 0;
+    }
 }

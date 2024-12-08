@@ -16,6 +16,7 @@ public class PlayerTeleportListener implements Listener {
         CheatPlayer cheatPlayer = CheatPlayerManager.getPlayer(player);
         cheatPlayer.getMovementContainer().getPlayerAuthInputData().teleported();
         cheatPlayer.getMovementContainer().getPlayerTimedLocationData().teleported();
+        cheatPlayer.getMovementContainer().getFlyData().teleported();
     }
 
 }

@@ -59,7 +59,7 @@ public class VelocityData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.VELOCITY);
-        if(System.currentTimeMillis() - damaged > 1000) {
+        if(System.currentTimeMillis() - damaged < 1000) {
             Vector3f playerloc = getContainer().getPlayer().getPlayer().asVector3f().setY(0);
             double distance = location.distance(playerloc);
             distances.addLast(distance);
