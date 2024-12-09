@@ -1,18 +1,26 @@
 package xyz.syodo.cheat.utils.data.container.combat.elements;
 
+import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.math.Vector3f;
-import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
+import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import lombok.Getter;
 import lombok.Setter;
+import xyz.syodo.cheat.utils.CheatPlayer;
+import xyz.syodo.cheat.utils.CheatPlayerManager;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
+import xyz.syodo.cheat.utils.data.container.movement.elements.PlayerAuthInputData;
+import xyz.syodo.communication.message.Message;
+import xyz.syodo.database.redis.IDRedis;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Optional;
 
 public class ReachData extends Data {
 
@@ -71,6 +79,7 @@ public class ReachData extends Data {
         }
         return response;
     }
+
     @Getter
     public static class ReachElement {
 

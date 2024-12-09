@@ -28,8 +28,8 @@ public class CheatPlayer {
 	private final Player player;
 
 	//Containers
-	private final CombatContainer combatContainer = new CombatContainer(this);
-	private final MovementContainer movementContainer = new MovementContainer(this);
+	private final CombatContainer combatContainer;
+	private final MovementContainer movementContainer;
 
 
 	//Cheat History
@@ -37,6 +37,8 @@ public class CheatPlayer {
 
 	public CheatPlayer(Player player) {
 		this.player = player;
+		this.combatContainer = new CombatContainer(this);
+		this.movementContainer = new MovementContainer(this);
 	}
 
 	public void addResponse(CheatResponse response) {

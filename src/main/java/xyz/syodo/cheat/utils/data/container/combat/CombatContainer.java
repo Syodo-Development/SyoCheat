@@ -14,7 +14,7 @@ public class CombatContainer extends Container {
     private final CPSData cpsData = new CPSData(this);
     private final HitCooldownData hitCooldownData = new HitCooldownData(this);
     private final ReachData reachData = new ReachData(this);
-    private final AimBotData aimBotContainer = new AimBotData(this);
+    private final AimBotData aimBotData = new AimBotData(this);
 
     public CombatContainer(CheatPlayer player) {
         super(player);

@@ -25,7 +25,10 @@ public class FlyData extends Data {
     @Setter
     private static int REQUIRED_MISSMATCH = 5;
     @Setter
+    private static int MINIMUM_AIRTIME = 10;
+    @Setter
     private static boolean INTERUPT_VANILLA_FLY = true;
+
 
     @Getter
     private long lastToggleFlight = System.currentTimeMillis();
@@ -43,12 +46,14 @@ public class FlyData extends Data {
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.FLY);
         Player player = getContainer().getPlayer().getPlayer();
+
         AxisAlignedBB box = new SimpleAxisAlignedBB(new Vector3(player.getX()-.5, player.getY()-2, player.getZ()-.5).floor(), new Vector3(player.getX()+.5, player.getY()+2, player.getZ()+.5).ceil());
         if(!player.getAllowFlight() && player.level.getCollisionBlocks(box, false, true).length == 0) {
+
             FlightEntry entry = new FlightEntry();
             if(lastEntry != null) {
                 if(lastMotion != null) {
-                    if(System.currentTimeMillis() - lastMotion.first() < 1000 * lastMotion.second().y) {
+                    if(System.currentTimeMillis() - lastMotion.first() < 3000) {
                         return response;
                     }
                 }
@@ -61,7 +66,7 @@ public class FlyData extends Data {
                     if(INTERUPT_VANILLA_FLY) {
                         player.getAdventureSettings().sendAbilities(Collections.singleton(player));
                     }
-                    if(flyMismatch++ >= REQUIRED_MISSMATCH) {
+                    if(flyMismatch++ >= REQUIRED_MISSMATCH && entry.airTime >= MINIMUM_AIRTIME) {
                         response.setCheating(true);
                         lastEntry = null;
                         flyMismatch = 0;

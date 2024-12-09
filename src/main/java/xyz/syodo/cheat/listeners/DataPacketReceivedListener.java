@@ -1,7 +1,6 @@
 package xyz.syodo.cheat.listeners;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.server.DataPacketReceiveEvent;
@@ -11,7 +10,6 @@ import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import cn.nukkit.network.protocol.types.inventory.transaction.UseItemOnEntityData;
 import xyz.syodo.cheat.utils.CheatPlayer;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
-import xyz.syodo.cheat.utils.data.CheatResponse;
 
 public class DataPacketReceivedListener implements Listener {
 
@@ -27,7 +25,7 @@ public class DataPacketReceivedListener implements Listener {
                 if(inventoryTransactionPacket.transactionData instanceof UseItemOnEntityData useItemOnEntityData) {
                     if(useItemOnEntityData.actionType == InventoryTransactionPacket.USE_ITEM_ON_ENTITY_ACTION_ATTACK) {
                         cheatPlayer.getCombatContainer().getCpsData().addClick();
-                        cheatPlayer.getCombatContainer().getAimBotContainer().addAngle(useItemOnEntityData);
+                        cheatPlayer.addResponse(cheatPlayer.getCombatContainer().getAimBotData().addAngle(useItemOnEntityData));
                     }
                 }
             }
