@@ -42,7 +42,7 @@ public class CheatPlayer {
 	}
 
 	public void addResponse(CheatResponse response) {
-		if(!response.isCheating()) return;
+		if(!response.isCheating() || !SyoCheat.isENABLED()) return;
 		cheatResponses.put(System.currentTimeMillis(), response);
 		Long time = System.currentTimeMillis();
 		int cheatpoints = 0;
