@@ -1,15 +1,13 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.block.*;
 import cn.nukkit.event.entity.EntityMotionEvent;
-import cn.nukkit.level.ParticleEffect;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.SimpleAxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import it.unimi.dsi.fastutil.Pair;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import xyz.syodo.cheat.utils.data.CheatCheck;
@@ -17,13 +15,17 @@ import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class FlyData extends Data {
 
     @Setter
     private static int REQUIRED_MISSMATCH = 5;
+    @Setter
+    private static int REQUIRED_MISSMATCH_0 = 10;
     @Setter
     private static int MINIMUM_AIRTIME = 10;
     @Setter
@@ -37,6 +39,8 @@ public class FlyData extends Data {
 
     private FlightEntry lastEntry;
     private int flyMismatch = 0;
+
+    private int zeroHeightMismatch = 0;
 
     public FlyData(Container container) {
         super(container);
@@ -61,15 +65,20 @@ public class FlyData extends Data {
                     if(lastEntry.Y == entry.Y)  {
                         if(Arrays.stream(player.level.getCollisionBlocks(player.getBoundingBox(), false, true)).anyMatch(b -> b instanceof BlockFlowable)) return response;
                     }
+                    double heightDiff = entry.Y - lastEntry.Y;
                     response.getMetaData().put("airtime", entry.getAirTime());
-                    response.getMetaData().put("difference", entry.Y - lastEntry.Y);
+                    response.getMetaData().put("difference", heightDiff);
                     if(INTERUPT_VANILLA_FLY) {
                         player.getAdventureSettings().sendAbilities(Collections.singleton(player));
                     }
                     if(flyMismatch++ >= REQUIRED_MISSMATCH && entry.airTime >= MINIMUM_AIRTIME) {
+
                         response.setCheating(true);
                         lastEntry = null;
                         flyMismatch = 0;
+                        if(heightDiff == 0 && ++zeroHeightMismatch < REQUIRED_MISSMATCH_0) {
+                            response.setCheating(false);
+                        } else zeroHeightMismatch = 0;
                         return response;
                     }
                 }
@@ -104,8 +113,15 @@ public class FlyData extends Data {
         }
     }
 
+    @Getter
+    @AllArgsConstructor
+    public class MismatchData {
+        private final double heightDif;
+    }
+
     public void teleported() {
         lastEntry = null;
         flyMismatch = 0;
+        zeroHeightMismatch = 0;
     }
 }

@@ -14,7 +14,7 @@ import xyz.syodo.cheat.utils.data.Data;
 
 import java.util.Iterator;
 
-public class AimBotData extends Data {
+public class AimlockData extends Data {
 
     @Setter
     private static int REMEMBER_HITS = 10;
@@ -23,16 +23,15 @@ public class AimBotData extends Data {
 
     public ObjectArrayList<AngleElement> headPlayerAngles = new ObjectArrayList<>();
 
-    public AimBotData(Container container) {
+    public AimlockData(Container container) {
         super(container);
     }
 
-    public CheatResponse addAngle(UseItemOnEntityData entityData) {
+    public void addAngle(UseItemOnEntityData entityData) {
         headPlayerAngles.addLast(new AngleElement(entityData));
         while (headPlayerAngles.size() > REMEMBER_HITS) {
             headPlayerAngles.removeFirst();
         }
-        return doCheck();
     }
 
     @Override

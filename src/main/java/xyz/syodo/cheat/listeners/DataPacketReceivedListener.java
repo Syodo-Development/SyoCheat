@@ -25,7 +25,7 @@ public class DataPacketReceivedListener implements Listener {
                 if(inventoryTransactionPacket.transactionData instanceof UseItemOnEntityData useItemOnEntityData) {
                     if(useItemOnEntityData.actionType == InventoryTransactionPacket.USE_ITEM_ON_ENTITY_ACTION_ATTACK) {
                         cheatPlayer.getCombatContainer().getCpsData().addClick();
-                        cheatPlayer.addResponse(cheatPlayer.getCombatContainer().getAimBotData().addAngle(useItemOnEntityData));
+                        cheatPlayer.getCombatContainer().getAimlockData().addAngle(useItemOnEntityData);
                     }
                 }
             }

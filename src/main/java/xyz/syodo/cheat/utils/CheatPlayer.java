@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.container.combat.CombatContainer;
-import xyz.syodo.cheat.utils.data.container.combat.elements.AimBotData;
 import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 import xyz.syodo.cloud.CloudAPI;
 import xyz.syodo.communication.message.Message;

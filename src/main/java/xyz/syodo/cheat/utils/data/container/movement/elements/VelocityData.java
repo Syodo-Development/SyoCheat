@@ -69,7 +69,7 @@ public class VelocityData extends Data {
             double average = 0;
             for (double d : distances) average += d;
             average /= distances.size();
-            if (event.getMotion().length() < 0.5) {
+            if (event.getMotion().length() < 0.2) {
                 return new CheatResponse(CheatCheck.OTHER);
             }
             if (average <= event.getMotion().length()) {
