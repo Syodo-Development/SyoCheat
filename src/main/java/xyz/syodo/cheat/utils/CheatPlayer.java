@@ -57,10 +57,11 @@ public class CheatPlayer {
 		}
 		if(cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC) {
 			if(!this.getPlayer().hasPermission("syocheat.bypass")) {
-				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
-				this.getPlayer().kick("", false);
-				response.getMetaData().put("kick", cheatpoints >= KICK_POINTS ? "POINTS" : "COUNT_SPECIFIC");
-				Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
+				//AUTO KICK DISABLED FOR RELEASE
+//				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
+//				this.getPlayer().kick("", false);
+//				response.getMetaData().put("kick", cheatpoints >= KICK_POINTS ? "POINTS" : "COUNT_SPECIFIC");
+//				Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
 			} else {
 				cheatResponses.clear();
 				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "Your CheatPoints were reset.");

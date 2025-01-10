@@ -10,7 +10,6 @@ public enum CheatCheck {
     TIMER(10),
     AUTOCLICKER(20),
     REACH(20, 2),
-    VELOCITY(20),
     AIMLOCK(20),
     FLY(34,2);
 

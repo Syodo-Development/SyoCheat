@@ -19,6 +19,8 @@ public class AimlockData extends Data {
     @Setter
     private static int REMEMBER_HITS = 10;
     @Setter
+    private static int MIN_HITS_TO_TRIGGER = 5;
+    @Setter
     private static double ANGLE_TRIGGER = 1;
 
     public ObjectArrayList<AngleElement> headPlayerAngles = new ObjectArrayList<>();
@@ -37,7 +39,7 @@ public class AimlockData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.AIMLOCK);
-        if(!headPlayerAngles.isEmpty()) {
+        if(headPlayerAngles.size() >= MIN_HITS_TO_TRIGGER) {
             double highest = 0;
             double lowest = Double.MAX_VALUE;
             double average = 0;

@@ -2,6 +2,7 @@ package xyz.syodo.cheat.utils.data.container.movement.elements;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.effect.EffectType;
+import cn.nukkit.level.Location;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class PlayerAuthInputData extends Data {
     private static boolean TELEPORT_IF_EXCEED = true;
 
     @Getter
-    private Long teleported = System.currentTimeMillis();
+    private Long teleported = System.currentTimeMillis() + 500;
 
     @Getter
     final LinkedHashMap<Long, PlayerAuthInputPacket> playerAuthInputPackets = new LinkedHashMap<>();
