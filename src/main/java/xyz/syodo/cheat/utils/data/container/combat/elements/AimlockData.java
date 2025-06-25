@@ -30,6 +30,7 @@ public class AimlockData extends Data {
     }
 
     public void addAngle(UseItemOnEntityData entityData) {
+        if(getContainer().getPlayer().getPlayer().getLevel().getEntity(entityData.entityRuntimeId) == null) return;
         headPlayerAngles.addLast(new AngleElement(entityData));
         while (headPlayerAngles.size() > REMEMBER_HITS) {
             headPlayerAngles.removeFirst();

@@ -35,6 +35,7 @@ public class FlyData extends Data {
     @Getter
     private long lastToggleFlight = System.currentTimeMillis();
 
+    @Getter
     private Pair<Long, Vector3> lastMotion;
 
     private FlightEntry lastEntry;

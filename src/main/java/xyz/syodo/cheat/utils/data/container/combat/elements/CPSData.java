@@ -2,6 +2,7 @@ package xyz.syodo.cheat.utils.data.container.combat.elements;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import lombok.Setter;
+import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
@@ -26,6 +27,7 @@ public class CPSData extends Data {
     }
 
     public CheatResponse saveCPS() {
+        if(!SyoCheat.isENABLED()) return new CheatResponse(CheatCheck.OTHER);
         CPS.addLast(clicks);
         clicks = 0;
         while (CPS.size() > REMEMBER_CPS) {

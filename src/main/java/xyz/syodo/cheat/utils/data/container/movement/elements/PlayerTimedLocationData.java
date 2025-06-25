@@ -2,7 +2,10 @@ package xyz.syodo.cheat.utils.data.container.movement.elements;
 
 import cn.nukkit.event.player.PlayerTeleportEvent;
 import cn.nukkit.level.Location;
+import cn.nukkit.math.Vector3;
+import it.unimi.dsi.fastutil.Pair;
 import lombok.Setter;
+import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
@@ -33,6 +36,7 @@ public class PlayerTimedLocationData extends Data {
     }
 
     public CheatResponse addLocation() {
+        if(!SyoCheat.isENABLED()) return new CheatResponse(CheatCheck.OTHER);
         if(System.currentTimeMillis() - teleported < 500) {
             locations.clear();
             return new CheatResponse(CheatCheck.OTHER);
@@ -47,12 +51,19 @@ public class PlayerTimedLocationData extends Data {
     @Override
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.SPEED);
+        var lastMotion = getContainer().getPlayer().getMovementContainer().getFlyData().getLastMotion();
+        double length = lastMotion.second().length();
+        if(length > ALLOWED_AVERAGE_DISTANCE / 10f) {
+            if(System.currentTimeMillis() - lastMotion.first() < 1000) {
+                locations.clear();
+                return new CheatResponse(CheatCheck.OTHER);
+            }
+        }
         if(getContainer().getPlayer().getPlayer().getAllowFlight()) return response;
         if(locations.size() > 10) {
             double highest = 0;
             double lowest = Integer.MAX_VALUE;
             double average = 0;
-
             List<Location> clonedList = new ArrayList<>();
             for(Location location : locations) clonedList.add(location);
             Iterator<Location> iterator = clonedList.iterator();

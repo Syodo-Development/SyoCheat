@@ -8,13 +8,17 @@ import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.network.protocol.InventoryTransactionPacket;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import cn.nukkit.network.protocol.types.inventory.transaction.UseItemOnEntityData;
+import lombok.SneakyThrows;
+import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.CheatPlayer;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
 public class DataPacketReceivedListener implements Listener {
 
+    @SneakyThrows
     @EventHandler
     public void on(DataPacketReceiveEvent event) {
+        if(!SyoCheat.isENABLED()) return;
         DataPacket packet = event.getPacket();
         Player player = event.getPlayer();
         if(player == null) return;

@@ -66,6 +66,11 @@ public class PlayerAuthInputData extends Data {
 
             double ALLOWED_DISTANCE = PlayerAuthInputData.ALLOWED_DISTANCE;
             double ALLOWED_AVERAGE = PlayerAuthInputData.ALLOWED_AVERAGE;
+            var lastMotion = getContainer().getPlayer().getMovementContainer().getFlyData().getLastMotion();
+            if(System.currentTimeMillis() - lastMotion.first() < 1000) {
+                ALLOWED_AVERAGE = lastMotion.second().length();
+                ALLOWED_DISTANCE = lastMotion.second().length();
+            }
 
             Player p = getContainer().getPlayer().getPlayer();
             if(p.hasEffect(EffectType.SPEED)) {
