@@ -52,11 +52,13 @@ public class PlayerTimedLocationData extends Data {
     public CheatResponse doCheck() {
         CheatResponse response = new CheatResponse(CheatCheck.SPEED);
         var lastMotion = getContainer().getPlayer().getMovementContainer().getFlyData().getLastMotion();
-        double length = lastMotion.second().length();
-        if(length > ALLOWED_AVERAGE_DISTANCE / 10f) {
-            if(System.currentTimeMillis() - lastMotion.first() < 1000) {
-                locations.clear();
-                return new CheatResponse(CheatCheck.OTHER);
+        if(lastMotion != null) {
+            double length = lastMotion.second().length();
+            if (length > ALLOWED_AVERAGE_DISTANCE / 10f) {
+                if (System.currentTimeMillis() - lastMotion.first() < 1000) {
+                    locations.clear();
+                    return new CheatResponse(CheatCheck.OTHER);
+                }
             }
         }
         if(getContainer().getPlayer().getPlayer().getAllowFlight()) return response;
