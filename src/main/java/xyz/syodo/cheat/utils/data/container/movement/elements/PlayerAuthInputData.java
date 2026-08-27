@@ -1,10 +1,9 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.Player;
-import cn.nukkit.entity.effect.EffectType;
-import cn.nukkit.level.Location;
-import cn.nukkit.math.Vector3f;
-import cn.nukkit.network.protocol.PlayerAuthInputPacket;
+import org.powernukkitx.Player;
+import org.powernukkitx.entity.effect.EffectType;
+import org.powernukkitx.level.Location;
+import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket;
 import lombok.Getter;
 import lombok.Setter;
 import xyz.syodo.cheat.utils.data.CheatCheck;
@@ -97,12 +96,14 @@ public class PlayerAuthInputData extends Data {
 
                 PlayerAuthInputPacket priorPacket = playerAuthInputPackets.get(latest);
                 PlayerAuthInputPacket currentPacket = playerAuthInputPackets.get(time);
-                int tickDiff = (int) (currentPacket.tick.getInputTick() - priorPacket.tick.getInputTick());
+                int tickDiff = (int) (currentPacket.getClientTick() - priorPacket.getClientTick());
 
-                Vector3f priorLocation = priorPacket.position.clone().setY(0);
-                Vector3f currentLocation = currentPacket.position.clone().setY(0);
+                var priorLocation = priorPacket.getPosition();
+                var currentLocation = currentPacket.getPosition();
                 if(difference < 40) difference = 40;
-                double distance = priorLocation.distance(currentLocation) * (50d/difference);
+                double deltaX = priorLocation.getX() - currentLocation.getX();
+                double deltaZ = priorLocation.getZ() - currentLocation.getZ();
+                double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * (50d/difference);
                 if(distance > 2) response.getCheck().setCheatpoints(100);
                 if(distance > highestDistanceDiff) highestDistanceDiff = distance;
                 if(distance < lowestDistanceDiff) lowestDistanceDiff = distance;
@@ -117,7 +118,9 @@ public class PlayerAuthInputData extends Data {
                     }
                     response.getMetaData().put("lastDistance", distance);
                     if(distance > ALLOWED_DISTANCE*1.3f && distance < 2 && TELEPORT_IF_EXCEED) {
-                        getContainer().getPlayer().getPlayer().teleport(priorPacket.position.asVector3());
+                        getContainer().getPlayer().getPlayer().teleport(new Location(
+                                priorLocation.getX(), priorLocation.getY(), priorLocation.getZ(),
+                                p.getYaw(), p.getPitch(), p.getLevel()));
                         return response;
                     }
                 }
@@ -141,7 +144,7 @@ public class PlayerAuthInputData extends Data {
                 response.getMetaData().put("trigger", "INPUT AVERAGE (" + ALLOWED_AVERAGE + ")");
             }
 
-            if(playerAuthInputPackets.get(latest).tick.getInputTick() % 10 == 0) {
+            if(playerAuthInputPackets.get(latest).getClientTick() % 10 == 0) {
                 averages.addLast(averageDistanceDiff);
                 int averageCount = averages.size();
                 if(averageCount > REMEMBER_AVERAGE) {

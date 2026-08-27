@@ -1,8 +1,8 @@
 package xyz.syodo.cheat.listeners;
 
-import cn.nukkit.event.EventHandler;
-import cn.nukkit.event.Listener;
-import cn.nukkit.event.player.PlayerKickEvent;
+import org.powernukkitx.event.EventHandler;
+import org.powernukkitx.event.Listener;
+import org.powernukkitx.event.player.PlayerKickEvent;
 import xyz.syodo.cheat.SyoCheat;
 
 public class PlayerKickListener implements Listener {

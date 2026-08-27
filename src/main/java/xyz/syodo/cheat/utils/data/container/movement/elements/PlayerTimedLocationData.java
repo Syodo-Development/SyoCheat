@@ -1,8 +1,8 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.event.player.PlayerTeleportEvent;
-import cn.nukkit.level.Location;
-import cn.nukkit.math.Vector3;
+import org.powernukkitx.event.player.PlayerTeleportEvent;
+import org.powernukkitx.level.Location;
+import org.powernukkitx.math.Vector3;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.Setter;
 import xyz.syodo.cheat.SyoCheat;

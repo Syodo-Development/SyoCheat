@@ -1,9 +1,9 @@
 package xyz.syodo.cheat.listeners;
 
-import cn.nukkit.Player;
-import cn.nukkit.event.EventHandler;
-import cn.nukkit.event.Listener;
-import cn.nukkit.event.entity.EntityDamageByEntityEvent;
+import org.powernukkitx.Player;
+import org.powernukkitx.event.EventHandler;
+import org.powernukkitx.event.Listener;
+import org.powernukkitx.event.entity.EntityDamageByEntityEvent;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.CheatPlayer;
 import xyz.syodo.cheat.utils.CheatPlayerManager;

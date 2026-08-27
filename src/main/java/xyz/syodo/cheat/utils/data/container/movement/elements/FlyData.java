@@ -1,11 +1,11 @@
 package xyz.syodo.cheat.utils.data.container.movement.elements;
 
-import cn.nukkit.Player;
-import cn.nukkit.block.*;
-import cn.nukkit.event.entity.EntityMotionEvent;
-import cn.nukkit.math.AxisAlignedBB;
-import cn.nukkit.math.SimpleAxisAlignedBB;
-import cn.nukkit.math.Vector3;
+import org.powernukkitx.Player;
+import org.powernukkitx.block.*;
+import org.powernukkitx.event.entity.EntityMotionEvent;
+import org.powernukkitx.math.AxisAlignedBB;
+import org.powernukkitx.math.SimpleAxisAlignedBB;
+import org.powernukkitx.math.Vector3;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

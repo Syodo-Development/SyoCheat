@@ -1,19 +1,14 @@
 package xyz.syodo.cheat.utils;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
+import org.powernukkitx.Player;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
-import org.json.JSONObject;
+import org.powernukkitx.Server;
 import xyz.syodo.cheat.SyoCheat;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.container.combat.CombatContainer;
 import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
-import xyz.syodo.cloud.CloudAPI;
-import xyz.syodo.communication.message.Message;
-import xyz.syodo.database.sql.SyoSQL;
 
 @Getter
 @Setter
@@ -57,41 +52,14 @@ public class CheatPlayer {
 		}
 		if(cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC) {
 			if(!this.getPlayer().hasPermission("syocheat.bypass")) {
-				//AUTO KICK DISABLED FOR RELEASE
-//				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
-//				this.getPlayer().kick("", false);
-//				response.getMetaData().put("kick", cheatpoints >= KICK_POINTS ? "POINTS" : "COUNT_SPECIFIC");
-//				Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
+				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
+				this.getPlayer().kick("", false);
+				response.getMetaData().put("kick", cheatpoints >= KICK_POINTS ? "POINTS" : "COUNT_SPECIFIC");
+				Server.getInstance().getOnlinePlayers().values().stream().filter(player1 -> player1.hasPermission("syocheat.broadcast")).forEach(player1 -> player1.sendMessage(SyoCheat.getPrefix() + getPlayer().getName() + " §4got kicked for cheating!"));
 			} else {
 				cheatResponses.clear();
 				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "Your CheatPoints were reset.");
 			}
 		}
-		logCheatResponse(response);
-		if(countSpecific >= response.getCheck().getBroadcastRequirement()) {
-			sendProxyMessage(response);
-		}
-	}
-
-	private void sendProxyMessage(CheatResponse response) {
-		Message.Builder message = new Message.Builder();
-		message.setTo("proxy");
-		message.appendMany("SyoCheatMessage",
-				getPlayer().getName(),
-				CloudAPI.get().getCurrentService().name(),
-				response.getCheck().name().toUpperCase(),
-				new JSONObject(response.getMetaData()).toString());
-		message.build().send();
-		message.setTo("discord");
-		message.build().send();
-	}
-
-	private void logCheatResponse(CheatResponse response) {
-		Object2ObjectOpenHashMap<String, Object> values = new Object2ObjectOpenHashMap<>();
-		values.put("userid", getPlayer().getUniqueId().toString());
-		values.put("type", response.getCheck().name());
-		values.put("server", CloudAPI.get().getCurrentService().name());
-		values.put("metadata", new JSONObject(response.getMetaData()).toString());
-		SyoSQL.insertRow("Moderation.cheatlogs", values);
 	}
 }

@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.json.JSONObject;
 
 @RequiredArgsConstructor
 @Getter
@@ -16,7 +15,7 @@ public class CheatResponse {
     private final Object2ObjectLinkedOpenHashMap<String, Object> metaData = new Object2ObjectLinkedOpenHashMap<>();
 
     public String toString() {
-        return this.getClass().getSimpleName() + "[" + check.name().toUpperCase() + ", cheating=" + cheating + ", metadata=" + new JSONObject(metaData).toString() + "]";
+        return this.getClass().getSimpleName() + "[" + check.name().toUpperCase() + ", cheating=" + cheating + ", metadata=" + metaData + "]";
     }
 
 }

@@ -1,9 +1,9 @@
 package xyz.syodo.cheat.utils.data.container.combat.elements;
 
-import cn.nukkit.Player;
-import cn.nukkit.math.Vector3;
-import cn.nukkit.math.Vector3f;
-import cn.nukkit.network.protocol.types.inventory.transaction.UseItemOnEntityData;
+import org.powernukkitx.Player;
+import org.powernukkitx.math.Vector3;
+import org.powernukkitx.math.Vector3f;
+import org.cloudburstmc.protocol.bedrock.data.payload.inventory.transaction.data.ItemUseOnActorInventoryTransaction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,8 +29,8 @@ public class AimlockData extends Data {
         super(container);
     }
 
-    public void addAngle(UseItemOnEntityData entityData) {
-        if(getContainer().getPlayer().getPlayer().getLevel().getEntity(entityData.entityRuntimeId) == null) return;
+    public void addAngle(ItemUseOnActorInventoryTransaction entityData) {
+        if(getContainer().getPlayer().getPlayer().getLevel().getEntity(entityData.getRuntimeId()) == null) return;
         headPlayerAngles.addLast(new AngleElement(entityData));
         while (headPlayerAngles.size() > REMEMBER_HITS) {
             headPlayerAngles.removeFirst();
@@ -76,17 +76,18 @@ public class AimlockData extends Data {
     @lombok.Data
     public class AngleElement {
 
-        private final UseItemOnEntityData data;
+        private final ItemUseOnActorInventoryTransaction data;
         private final Vector3f targetPos;
         private final double angle;
         private final long time;
 
-        public AngleElement(UseItemOnEntityData data) {
+        public AngleElement(ItemUseOnActorInventoryTransaction data) {
             this.time = System.currentTimeMillis();
             this.data = data;
             Player player = getContainer().getPlayer().getPlayer();
-            Vector3 playerloc = data.playerPos;
-            targetPos = player.getLevel().getEntity(data.entityRuntimeId).asVector3f().clone();
+            var fromPosition = data.getFromPosition();
+            Vector3 playerloc = new Vector3(fromPosition.getX(), fromPosition.getY(), fromPosition.getZ());
+            targetPos = player.getLevel().getEntity(data.getRuntimeId()).asVector3f().clone();
             double anglePosition = Math.abs(Math.toDegrees(Math.atan2(targetPos.x - playerloc.x, targetPos.z - playerloc.z)));
             double angleVector = Math.abs(Math.toDegrees(Math.atan2(player.getDirectionVector().x, player.getDirectionVector().z)));
             angle = Math.abs(anglePosition - angleVector);

@@ -1,25 +1,23 @@
 package xyz.syodo.cheat;
 
-import cn.nukkit.Server;
-import cn.nukkit.command.Command;
-import cn.nukkit.command.SimpleCommandMap;
-import cn.nukkit.plugin.Plugin;
-import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.plugin.PluginManager;
-import cn.nukkit.scheduler.ServerScheduler;
+import org.powernukkitx.Server;
+import org.powernukkitx.command.Command;
+import org.powernukkitx.command.SimpleCommandMap;
+import org.powernukkitx.plugin.Plugin;
+import org.powernukkitx.plugin.PluginBase;
+import org.powernukkitx.plugin.PluginManager;
+import org.powernukkitx.scheduler.ServerScheduler;
 import lombok.Getter;
 import lombok.Setter;
 import xyz.syodo.cheat.commands.SyoCheatCommand;
 import xyz.syodo.cheat.listeners.*;
 import xyz.syodo.cheat.task.AutoClickerTask;
 import xyz.syodo.cheat.task.PlayerTimedLocationTask;
-import xyz.syodo.database.redis.SyoRedis;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
 public class SyoCheat extends PluginBase {
 
 	@Getter public static final String prefix = "§r§8» §b§lSyo§cCheat§r§8│§c ";
-	@Getter private static SyoRedis redis;
 	private static Plugin plugin;
 
 	@Getter
@@ -33,7 +31,6 @@ public class SyoCheat extends PluginBase {
 	@Override
 	public void onLoad() {
 		plugin = this;
-		redis = new SyoRedis("jointick");
 	}
 
 	@Override

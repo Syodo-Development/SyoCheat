@@ -1,8 +1,8 @@
 package xyz.syodo.cheat.commands;
 
-import cn.nukkit.Server;
-import cn.nukkit.command.Command;
-import cn.nukkit.command.CommandSender;
+import org.powernukkitx.Server;
+import org.powernukkitx.command.Command;
+import org.powernukkitx.command.CommandSender;
 import xyz.syodo.cheat.SyoCheat;
 
 public class SyoCheatCommand extends Command {

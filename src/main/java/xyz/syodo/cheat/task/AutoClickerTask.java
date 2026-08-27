@@ -1,6 +1,6 @@
 package xyz.syodo.cheat.task;
 
-import cn.nukkit.scheduler.Task;
+import org.powernukkitx.scheduler.Task;
 import xyz.syodo.cheat.utils.CheatPlayerManager;
 
 public class AutoClickerTask extends Task {

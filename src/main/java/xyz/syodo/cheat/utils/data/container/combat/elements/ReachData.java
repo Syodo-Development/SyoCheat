@@ -1,22 +1,14 @@
 package xyz.syodo.cheat.utils.data.container.combat.elements;
 
-import cn.nukkit.Player;
-import cn.nukkit.entity.Entity;
-import cn.nukkit.event.entity.EntityDamageByEntityEvent;
-import cn.nukkit.event.entity.EntityDamageEvent;
-import cn.nukkit.math.Vector3f;
-import cn.nukkit.network.protocol.PlayerAuthInputPacket;
+import org.powernukkitx.event.entity.EntityDamageByEntityEvent;
+import org.powernukkitx.event.entity.EntityDamageEvent;
+import org.powernukkitx.math.Vector3f;
 import lombok.Getter;
 import lombok.Setter;
-import xyz.syodo.cheat.utils.CheatPlayer;
-import xyz.syodo.cheat.utils.CheatPlayerManager;
 import xyz.syodo.cheat.utils.data.CheatCheck;
 import xyz.syodo.cheat.utils.data.CheatResponse;
 import xyz.syodo.cheat.utils.data.Container;
 import xyz.syodo.cheat.utils.data.Data;
-import xyz.syodo.cheat.utils.data.container.movement.elements.PlayerAuthInputData;
-import xyz.syodo.communication.message.Message;
-import xyz.syodo.database.redis.IDRedis;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
