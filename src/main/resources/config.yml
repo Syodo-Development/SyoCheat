@@ -1,0 +1,116 @@
+# SyoCheat configuration
+# Time values ending in "-ms" are milliseconds. Twenty server ticks normally equal one second.
+# Lower detection thresholds make checks stricter and may increase false positives.
+
+general:
+  # Enables or disables all cheat detection when the plugin starts.
+  enabled: true
+  # Prefix used for messages. Use '&' for Minecraft color codes.
+  prefix: "&r&8» &b&lSyo&cCheat&r&8│&c "
+
+tasks:
+  # Delay before the repeating detection tasks run for the first time.
+  initial-delay-ticks: 10
+  # How often click samples are saved. The default of 10 ticks measures clicks per half-second.
+  autoclicker-period-ticks: 10
+  # How often player locations are sampled for the timed speed check.
+  location-period-ticks: 10
+
+violations:
+  # Total violation points required to trigger the punishment threshold.
+  maximum-points: 100
+  # Number of violations from the same check required to trigger the punishment threshold.
+  maximum-same-check-count: 4
+  # How long a violation remains in a player's history.
+  history-retention-ms: 150000
+
+checks:
+  # Values shared by the generic fallback check.
+  other:
+    points: 0
+    broadcast-requirement: 1
+
+  # Violation values used by both speed detection methods.
+  speed:
+    points: 20
+    broadcast-requirement: 1
+
+  timer:
+    points: 10
+    broadcast-requirement: 1
+
+  autoclicker:
+    # Violation points added when this check flags.
+    points: 20
+    # Consecutive flags required before a notification would be sent.
+    broadcast-requirement: 1
+    # Number of historical click samples kept per player.
+    remember-samples: 10
+    # Minimum number of samples required before evaluating the check.
+    minimum-samples: 8
+    # Minimum average clicks per sample that can flag.
+    minimum-average-cps: 6.0
+    # Minimum value of the lowest sample that can flag.
+    minimum-lowest-cps: 4.0
+    # Controls how consistent clicks must be. Higher values require more consistency.
+    consistency-divisor: 5.0
+
+  hit-cooldown:
+    # Minimum allowed time between two registered hits.
+    minimum-hit-interval-ms: 333
+
+  reach:
+    points: 20
+    broadcast-requirement: 2
+    # Number of recent hits used to calculate reach statistics.
+    remember-hits: 10
+    # Maximum allowed distance for the newest individual hit.
+    maximum-single-distance: 4.6
+    # Maximum allowed average distance. At least four samples are required.
+    maximum-average-distance: 4.5
+
+  aimlock:
+    points: 20
+    broadcast-requirement: 1
+    # Number of recent attack angles retained.
+    remember-hits: 10
+    # Minimum number of retained attacks before checking aim consistency.
+    minimum-hits: 5
+    # Average angle below which aim is considered unnaturally consistent.
+    maximum-average-angle: 1.0
+
+  fly:
+    points: 34
+    broadcast-requirement: 2
+    # Number of upward or level-air movement mismatches required to flag.
+    required-mismatches: 5
+    # Additional level-height mismatches required before level flight flags.
+    required-zero-height-mismatches: 10
+    # Minimum number of ticks the player must have been airborne.
+    minimum-air-ticks: 10
+    # Resends vanilla ability data while checking, which can stop client-side flying.
+    resend-vanilla-abilities: true
+    # Ignores fly detection briefly after server-applied motion such as knockback.
+    motion-grace-period-ms: 3000
+
+  speed-auth:
+    # Number of authentication input packets retained per player.
+    remember-packets: 20
+    # Number of rolling distance averages retained for long-term detection.
+    remember-averages: 5
+    # Maximum normalized distance of a single input packet movement.
+    maximum-single-distance: 0.7
+    # Maximum normalized average movement distance.
+    maximum-average-distance: 0.65
+    # Teleports the player back when a suspicious single movement is detected.
+    teleport-on-exceed: true
+
+  speed-timed:
+    # Number of periodically sampled locations retained per player.
+    remember-locations: 20
+    # Maximum allowed distance between the newest two sampled locations.
+    maximum-single-distance: 4.4
+    # Maximum allowed average distance between sampled locations.
+    maximum-average-distance: 4.3
+    # Teleports the player back when the single-distance limit is exceeded.
+    teleport-on-exceed: true

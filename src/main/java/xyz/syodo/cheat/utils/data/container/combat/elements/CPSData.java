@@ -14,6 +14,14 @@ public class CPSData extends Data {
 
     @Setter
     private static int REMEMBER_CPS = 10;
+    @Setter
+    private static double MINIMUM_AVERAGE_CPS = 6.0D;
+    @Setter
+    private static int MINIMUM_SAMPLES = 8;
+    @Setter
+    private static double MINIMUM_LOWEST_CPS = 4.0D;
+    @Setter
+    private static double CONSISTENCY_DIVISOR = 5.0D;
 
     private int clicks = 0;
     public IntArrayList CPS = new IntArrayList();
@@ -50,7 +58,8 @@ public class CPSData extends Data {
         }
         average /= count;
 
-        if (average >= 6.0D && count > 7 && lowest >= 4.0D && average - lowest < average / 5.0D) {
+        if (average >= MINIMUM_AVERAGE_CPS && count >= MINIMUM_SAMPLES && lowest >= MINIMUM_LOWEST_CPS
+                && average - lowest < average / CONSISTENCY_DIVISOR) {
             response.setCheating(true);
             response.getMetaData().put("lowest", lowest);
             response.getMetaData().put("highest", highest);

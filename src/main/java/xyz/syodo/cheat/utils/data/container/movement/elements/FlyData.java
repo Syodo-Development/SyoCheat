@@ -30,6 +30,8 @@ public class FlyData extends Data {
     private static int MINIMUM_AIRTIME = 10;
     @Setter
     private static boolean INTERUPT_VANILLA_FLY = true;
+    @Setter
+    private static long MOTION_GRACE_PERIOD_MS = 3000L;
 
 
     @Getter
@@ -58,7 +60,7 @@ public class FlyData extends Data {
             FlightEntry entry = new FlightEntry();
             if(lastEntry != null) {
                 if(lastMotion != null) {
-                    if(System.currentTimeMillis() - lastMotion.first() < 3000) {
+                    if(System.currentTimeMillis() - lastMotion.first() < MOTION_GRACE_PERIOD_MS) {
                         return response;
                     }
                 }

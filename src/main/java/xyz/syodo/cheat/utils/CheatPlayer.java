@@ -15,9 +15,9 @@ import xyz.syodo.cheat.utils.data.container.movement.MovementContainer;
 public class CheatPlayer {
 
 	//Static variables
-	private static int KICK_POINTS = 100;
-	private static int KICK_COUNT_SPECIFIC = 4;
-	private static long REMOVAL_TIME = 150000; //2.5 minutes
+	@Setter private static int KICK_POINTS = 100;
+	@Setter private static int KICK_COUNT_SPECIFIC = 4;
+	@Setter private static long REMOVAL_TIME = 150000; //2.5 minutes
 
 	private final Player player;
 

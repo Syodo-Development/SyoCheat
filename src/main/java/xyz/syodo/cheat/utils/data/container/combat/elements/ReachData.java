@@ -19,9 +19,9 @@ public class ReachData extends Data {
     @Setter
     private static int REMEMBER_HITS = 10;
     @Setter
-    private static float FLAG_REACH_AT = 4.6f;
+    private static double FLAG_REACH_AT = 4.6;
     @Setter
-    private static float FLAG_REACH_AT_AVERAGE = 4.5f;
+    private static double FLAG_REACH_AT_AVERAGE = 4.5;
 
     final LinkedHashMap<Long, ReachElement> reachElements = new LinkedHashMap<>();
 
