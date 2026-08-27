@@ -17,6 +17,9 @@ tasks:
   location-period-ticks: 10
 
 violations:
+  # Automatically kicks players when either violation limit below is reached.
+  # When disabled, checks and violation tracking continue without kicking players.
+  auto-kick: true
   # Total violation points required to trigger the punishment threshold.
   maximum-points: 100
   # Number of violations from the same check required to trigger the punishment threshold.

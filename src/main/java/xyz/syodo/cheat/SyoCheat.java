@@ -57,6 +57,7 @@ public class SyoCheat extends PluginBase {
 		CheatPlayer.setKICK_POINTS(config.getInt("violations.maximum-points", 100));
 		CheatPlayer.setKICK_COUNT_SPECIFIC(config.getInt("violations.maximum-same-check-count", 4));
 		CheatPlayer.setREMOVAL_TIME(config.getLong("violations.history-retention-ms", 150000L));
+		CheatPlayer.setAUTO_KICK(config.getBoolean("violations.auto-kick", true));
 
 		for (CheatCheck check : CheatCheck.values()) {
 			String path = "checks." + check.name().toLowerCase().replace('_', '-') + ".";

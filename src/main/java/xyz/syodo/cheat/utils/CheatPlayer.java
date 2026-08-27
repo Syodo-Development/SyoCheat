@@ -18,6 +18,7 @@ public class CheatPlayer {
 	@Setter private static int KICK_POINTS = 100;
 	@Setter private static int KICK_COUNT_SPECIFIC = 4;
 	@Setter private static long REMOVAL_TIME = 150000; //2.5 minutes
+	@Setter private static boolean AUTO_KICK = true;
 
 	private final Player player;
 
@@ -50,7 +51,7 @@ public class CheatPlayer {
 				if(cheatResponse.getCheck() == response.getCheck()) countSpecific++;
 			}
 		}
-		if(cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC) {
+		if(AUTO_KICK && (cheatpoints >= KICK_POINTS || countSpecific >= KICK_COUNT_SPECIFIC)) {
 			if(!this.getPlayer().hasPermission("syocheat.bypass")) {
 				this.getPlayer().sendMessage(SyoCheat.getPrefix() + "You got kicked because our system detected you cheating.");
 				this.getPlayer().kick("", false);
