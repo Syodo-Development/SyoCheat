@@ -24,9 +24,9 @@ public class PlayerAuthInputData extends Data {
     @Setter
     private static int REMEMBER_AVERAGE = 5;
     @Setter
-    private static double ALLOWED_DISTANCE = 0.63;
+    private static double ALLOWED_DISTANCE = 0.7;
     @Setter
-    private static double ALLOWED_AVERAGE = 0.42;
+    private static double ALLOWED_AVERAGE = 0.65;
     @Setter
     private static boolean TELEPORT_IF_EXCEED = true;
 
@@ -69,8 +69,8 @@ public class PlayerAuthInputData extends Data {
             var lastMotion = getContainer().getPlayer().getMovementContainer().getFlyData().getLastMotion();
             if(lastMotion != null) {
                 if(System.currentTimeMillis() - lastMotion.first() < 1000) {
-                    ALLOWED_AVERAGE = lastMotion.second().length();
-                    ALLOWED_DISTANCE = lastMotion.second().length();
+                    ALLOWED_AVERAGE = lastMotion.second().length()*2;
+                    ALLOWED_DISTANCE = lastMotion.second().length()*2;
                 }
             }
 
